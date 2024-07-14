@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="EasyGPS 4.93" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.topografix.com/GPX/gpx_overlay/0/3 http://www.topografix.com/GPX/gpx_overlay/0/3/gpx_overlay.xsd http://www.topografix.com/GPX/gpx_modified/0/1 http://www.topografix.com/GPX/gpx_modified/0/1/gpx_modified.xsd">
+<metadata>
+<bounds minlat="-8.41166100" minlon="116.39541500" maxlat="-8.30324400" maxlon="116.50091100"/>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:40:44.797Z</time>
+</extensions>
+</metadata>
+<wpt lat="-8.34008200" lon="116.50091100">
+<ele>996.200</ele>
+<time>2013-11-02T01:04:14Z</time>
+<name>Sembalun start</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:12:28Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Sembalun start</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.34196100" lon="116.49811700">
+<ele>985.600</ele>
+<time>2013-11-02T01:16:25Z</time>
+<name>Cross stream</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:12:41Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Cross stream</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.35069700" lon="116.49240200">
+<ele>1095.500</ele>
+<time>2013-11-02T01:34:55Z</time>
+<name>Dry riverbed</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:12:56Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Dry riverbed</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.35579200" lon="116.48742800">
+<ele>1238.200</ele>
+<time>2013-11-02T01:59:59Z</time>
+<name>Shade</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:13:14Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Shade</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.35991500" lon="116.48420700">
+<ele>1302.200</ele>
+<time>2013-11-02T02:09:46Z</time>
+<name>Bridge 1</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:13:26Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Bridge 1</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.35996400" lon="116.48015000">
+<ele>1338.400</ele>
+<time>2013-11-02T02:20:16Z</time>
+<name>Bridge 2</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:13:42Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Bridge 2</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.36140800" lon="116.47579000">
+<ele>1428.600</ele>
+<time>2013-11-02T02:32:25Z</time>
+<name>Pos 1</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:13:56Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Pos 1</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.36524400" lon="116.46621300">
+<ele>1513.100</ele>
+<time>2013-11-02T03:22:50Z</time>
+<name>Pos 2 lunch bridge</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:14:10Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Pos 2 lunch bridge</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.37064600" lon="116.46237300">
+<ele>1652.100</ele>
+<time>2013-11-02T05:39:23Z</time>
+<name>Rock</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:14:37Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Rock</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.37234100" lon="116.46029800">
+<ele>1699.000</ele>
+<time>2013-11-02T05:53:27Z</time>
+<name>Cement bridge</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:14:50Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Cement bridge</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.37379500" lon="116.45896800">
+<ele>1751.700</ele>
+<time>2013-11-02T06:01:14Z</time>
+<name>Pos 2 and a half</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:15:16Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Pos 2 and a half</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.37608600" lon="116.45793700">
+<ele>1772.500</ele>
+<time>2013-11-02T06:08:47Z</time>
+<name>Pos 3</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:15:32Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Pos 3</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.37887500" lon="116.45376300">
+<ele>2000.600</ele>
+<time>2013-11-02T06:43:26Z</time>
+<name>2000 m</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:40:35.983Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>2000 m</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.38069500" lon="116.45211900">
+<ele>2089.100</ele>
+<time>2013-11-02T07:03:28Z</time>
+<name>Unnumbered pos</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:40:44.797Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Unnumbered pos</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.38613000" lon="116.44264200">
+<ele>2603.100</ele>
+<time>2013-11-02T08:26:45Z</time>
+<name>Sembalun rim</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:16:05Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Sembalun rim</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.39079900" lon="116.44219300">
+<ele>2658.500</ele>
+<time>2013-11-02T09:23:23Z</time>
+<name>Sembalun rim camp</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:16:27Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Sembalun rim camp</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.39879000" lon="116.44050300">
+<ele>2969.300</ele>
+<time>2013-11-02T19:28:52Z</time>
+<name>Summit rim</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:16:45Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Summit rim</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.41166100" lon="116.45812600">
+<ele>3718.900</ele>
+<time>2013-11-02T23:14:37Z</time>
+<name>Rinjani peak</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:16:58Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Rinjani peak</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.38958700" lon="116.43570900">
+<ele>2136.600</ele>
+<time>2013-11-03T03:01:44Z</time>
+<name>Day 2 bridge 1</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:17:19Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Day 2 bridge 1</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.39205500" lon="116.43402400">
+<ele>2150.300</ele>
+<time>2013-11-03T03:09:23Z</time>
+<name>Day 2 bridge 2</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:17:29Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Day 2 bridge 2</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.39195200" lon="116.41952100">
+<ele>2018.000</ele>
+<time>2013-11-03T03:57:00Z</time>
+<name>Lake pos</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:17:45Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Lake pos</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.39099900" lon="116.41778600">
+<ele>2020.000</ele>
+<time>2013-11-03T04:31:52Z</time>
+<name>Lake camp</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:17:56Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Lake camp</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.38941000" lon="116.42047300">
+<ele>1955.900</ele>
+<time>2013-11-03T07:13:31Z</time>
+<name>Hot springs</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:18:09Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Hot springs</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.38975200" lon="116.41470500">
+<ele>2004.500</ele>
+<time>2013-11-03T22:44:15Z</time>
+<name>Turn right up hill</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:18:22Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Turn right up hill</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.38402000" lon="116.40053000">
+<ele>2620.700</ele>
+<time>2013-11-04T00:49:20Z</time>
+<name>Senaru rim</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:18:37Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Senaru rim</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.37904600" lon="116.40139300">
+<ele>2481.800</ele>
+<time>2013-11-04T01:26:30Z</time>
+<name>Senaru Pos 3 and a half</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:19:05Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Senaru Pos 3 and a half</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.37358300" lon="116.40102700">
+<ele>2286.200</ele>
+<time>2013-11-04T01:45:22Z</time>
+<name>Sign Pos</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:19:26Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Sign Pos</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.36927400" lon="116.39940000">
+<ele>2124.000</ele>
+<time>2013-11-04T02:01:29Z</time>
+<name>Senaru Pos 3</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:20:03Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Senaru Pos 3</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.36749200" lon="116.39868700">
+<ele>2088.300</ele>
+<time>2013-11-04T02:10:17Z</time>
+<name>Edge of forest</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:20:58Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Edge of forest</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.34880900" lon="116.39541500">
+<ele>1566.800</ele>
+<time>2013-11-04T03:16:44Z</time>
+<name>Senaru Pos 2</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:21:22Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Senaru Pos 2</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.34767600" lon="116.39568200">
+<ele>1535.700</ele>
+<time>2013-11-04T03:33:39Z</time>
+<name>Lutung sign</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:21:10Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Lutung sign</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.34054200" lon="116.40086600">
+<ele>1239.000</ele>
+<time>2013-11-04T04:14:14Z</time>
+<name>Senaru Pos Extra</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:21:35Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Senaru Pos Extra</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.32849600" lon="116.40194800">
+<ele>928.500</ele>
+<time>2013-11-04T05:10:25Z</time>
+<name>Senaru Pos 1</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:21:54Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Senaru Pos 1</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.32001400" lon="116.40225100">
+<ele>803.000</ele>
+<time>2013-11-04T05:32:18Z</time>
+<name>Senaru forest entrance</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:22:11Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Senaru forest entrance</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.30460900" lon="116.40092200">
+<ele>572.600</ele>
+<time>2013-11-04T06:01:23Z</time>
+<name>Senaru gate</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:22:39Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Senaru gate</label_text>
+</label>
+</extensions>
+</wpt>
+<wpt lat="-8.30324400" lon="116.40100800">
+<ele>586.100</ele>
+<time>2013-11-04T06:04:48Z</time>
+<name>Senaru road</name>
+<sym>Flag, Blue</sym>
+<extensions>
+<time xmlns="http://www.topografix.com/GPX/gpx_modified/0/1">2013-11-08T02:22:55Z</time>
+<label xmlns="http://www.topografix.com/GPX/gpx_overlay/0/3">
+<label_text>Senaru road</label_text>
+</label>
+</extensions>
+</wpt>
+<extensions>
+</extensions>
+</gpx>

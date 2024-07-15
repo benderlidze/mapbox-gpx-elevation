@@ -3,13 +3,14 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Add a line to a map using a GeoJSON source</title>
+    <title>Add 3D terrain to a map</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-    <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.css" rel="stylesheet">
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.js"></script>
+
     <script src='https://unpkg.com/togeojson@0.16.0/togeojson.js'></script>
-    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7/turf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+
 
     <style>
         body {
@@ -18,50 +19,45 @@
         }
 
         #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
             width: 100%;
-            flex: 1;
-        }
-
-        #container {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        #elevation-chart {
-            height: 30%;
-            background-color: white;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 
 <body>
-
-    <div id="container">
-        <div id="map"></div>
-        <div id="elevation-chart"></div>
-    </div>
+    <div id="map"></div>
 
     <script>
-
-        const elevationChart = document.getElementById('elevation-chart');
 
         const gpxFileURL = 'rinjaniwp.gpx';
         mapboxgl.accessToken = 'pk.eyJ1Ijoic2VyZ2JlciIsImEiOiJja3dwOWgzeGQwYWdyMm9xb2pkMDFvYmNuIn0.H9AJ_NLmDNYMed6dvu_Q0A';
         const map = new mapboxgl.Map({
             container: 'map',
-            //style: 'https://tiles.stadiamaps.com/styles/outdoors.json?key=c6948310-631b-491a-b1d9-d1f9186c03ae', // style URL
-            style: 'https://tiles.stadiamaps.com/styles/outdoors.json?key=bc06701b-526f-47fe-afff-27877e93db72', // style URL
             center: { lng: 116.44699281267492, lat: -8.373418469943047 },
-            zoom: 6.8
+            zoom: 6.8,
+            pitch: 80,
+            bearing: 41,
+            // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+            style: 'mapbox://styles/mapbox/satellite-streets-v12'
         });
 
+        //add controls 
+        map.addControl(new mapboxgl.NavigationControl());
+
         map.on('load', () => {
+
+            map.addSource('mapbox-dem', {
+                'type': 'raster-dem',
+                'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
+                'tileSize': 512,
+                'maxzoom': 14
+            });
+            // add the DEM source as a terrain layer with exaggerated height
+            map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 });
+
 
             map.addLayer({
                 "id": "contour-labels",
@@ -118,19 +114,9 @@
                     'line-cap': 'round'
                 },
                 'paint': {
-                    'line-color': '#264BC2 ',
+                    'line-color': 'yellow ',
                     'line-width': 8
                 }
-            });
-
-            map.on("mousemove", "route", function (e) {
-                const features = map.queryRenderedFeatures(e.point);
-                console.log('features', features);
-            });
-
-            map.on("click", function (e) {
-                const features = map.queryRenderedFeatures(e.point);
-                console.log('features', features);
             });
 
             fetch(gpxFileURL)
@@ -140,8 +126,6 @@
                 .then(function (xml) {
                     const geoJson = toGeoJSON.gpx(new DOMParser().parseFromString(xml, "text/xml"))
                     console.log('geoJson', geoJson);
-
-                    buildElevationChart(geoJson)
 
                     //points to linestring 
                     const lineCoords = turf.coordAll(geoJson).map(d => [d[0], d[1]])
@@ -158,9 +142,10 @@
 
                     var bounds = new mapboxgl.LngLatBounds();
                     lineCoords.forEach(function (coord) {
+                        console.log('coord', coord);
                         bounds.extend(coord);
                     });
-                    map.fitBounds(bounds, { padding: 150 });
+                    map.fitBounds(bounds, { padding: 150, bearing: 87, pitch: 54 });
 
                 });
 
@@ -198,44 +183,6 @@
             new mapboxgl.Marker(el)
                 .setLngLat(coords)
                 .addTo(map);
-        }
-
-
-
-
-        function buildElevationChart(geojson) {
-            const coords = turf.coordAll(geojson);
-            const elevation = coords.map(d => d[2])
-            const distance = coords.map((d, i) => i)
-
-            console.log('elevation', elevation);
-            console.log('distance', distance);
-
-            const canvas = document.createElement('canvas');
-            canvas.style.width = '100%';
-            canvas.style.height = '100%';
-            elevationChart.appendChild(canvas);
-
-            const chart = new Chart(canvas, {
-                type: 'line',
-                data: {
-                    labels: distance,
-                    datasets: [{
-                        label: 'Elevation',
-                        data: elevation,
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        borderWidth: 3,
-                        fill: false
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
         }
     </script>
 

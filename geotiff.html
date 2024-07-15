@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Local GeoTIFF Elevation Reader</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/geotiff@2.1.3/dist-browser/geotiff.min.js"></script>
+</head>
+
+<body>
+    <input type="file" id="fileInput" accept=".tiff,.tif">
+    <button onclick="readElevation()">Read Elevation</button>
+    <div id="result"></div>
+
+    <script>
+        let tiff;
+
+        async function loadGeoTIFF(file) {
+            const arrayBuffer = await file.arrayBuffer();
+            tiff = await GeoTIFF.fromArrayBuffer(arrayBuffer);
+        }
+
+        async function getElevation(lon, lat) {
+            if (!tiff) {
+                console.error('GeoTIFF not loaded');
+                return null;
+            }
+
+            const image = await tiff.getImage();
+            const rasters = await image.readRasters();
+            const tiepoint = image.getTiePoints()[0];
+            const pixelScale = image.getFileDirectory().ModelPixelScale;
+            const band = rasters[0];
+            const width = image.getWidth();
+            const height = image.getHeight();
+
+            const x = Math.round((lon - tiepoint.x) / pixelScale[0]);
+            const y = Math.round((tiepoint.y - lat) / pixelScale[1]);
+
+            if (x < 0 || x >= width || y < 0 || y >= height) {
+                console.error('Coordinates out of bounds');
+                return null;
+            }
+
+            return band[y * width + x];
+        }
+
+        async function readElevation() {
+            const fileInput = document.getElementById('fileInput');
+            const resultDiv = document.getElementById('result');
+
+            if (fileInput.files.length === 0) {
+                resultDiv.textContent = 'Please select a GeoTIFF file.';
+                return;
+            }
+
+            await loadGeoTIFF(fileInput.files[0]);
+
+            // Example coordinates - replace with your desired longitude and latitude
+            const lon = 116.484283
+
+            const lat = -8.36062;
+
+            const elevation = await getElevation(lon, lat);
+
+            if (elevation !== null) {
+                resultDiv.textContent = `Elevation at (${lon}, ${lat}): ${elevation} meters`;
+            } else {
+                resultDiv.textContent = 'Failed to read elevation. Check console for errors.';
+            }
+        }
+    </script>
+</body>
+
+</html>

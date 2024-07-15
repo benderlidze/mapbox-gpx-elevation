@@ -48,7 +48,11 @@
     </div>
 
     <script>
+        //https://api.open-elevation.com/api/v1/lookup?locations=-8.355792,116.487428
+        //https://www.opentopodata.org/
+        //https://api.opentopodata.org/v1/srtm30m?locations=-8.341961,116.498117
 
+        const mainData = {}
         const elevationChart = document.getElementById('elevation-chart');
 
         const gpxFileURL = 'rinjaniwp.gpx';
@@ -123,14 +127,86 @@
                 }
             });
 
-            map.on("mousemove", "route", function (e) {
-                const features = map.queryRenderedFeatures(e.point);
-                console.log('features', features);
+            map.addSource('point', {
+                'type': 'geojson',
+                'data': {
+                    'type': 'FeatureCollection',
+                    'features': []
+                }
             });
 
-            map.on("click", function (e) {
-                const features = map.queryRenderedFeatures(e.point);
-                console.log('features', features);
+            map.addLayer({
+                'id': 'point',
+                'type': 'circle',
+                'source': 'point',
+                'paint': {
+                    'circle-radius': 10,
+                    'circle-color': '#3887be'
+                }
+            });
+
+            // Add a new source for the buffer
+            map.addSource('routeBuffer', {
+                'type': 'geojson',
+                'data': {
+                    'type': 'Feature',
+                    'properties': {},
+                    'geometry': {
+                        'type': 'Polygon',
+                        'coordinates': [[]]
+                    }
+                }
+            });
+
+            // Add a new layer for the buffer (optional, for visualization)
+            map.addLayer({
+                'id': 'routeBuffer',
+                'type': 'fill',
+                'source': 'routeBuffer',
+                'layout': {},
+                'paint': {
+                    'fill-color': '#888',
+                    'fill-opacity': 0.1
+                }
+            });
+
+            // Function to update the buffer
+            function updateBuffer(route, distance) {
+                const buffered = turf.buffer(route, distance, { units: 'kilometers' });
+                map.getSource('routeBuffer').setData(buffered);
+                return buffered;
+            }
+
+            // Update the mousemove event
+            map.on('mousemove', (e) => {
+                const coordinates = e.lngLat;
+                const point = turf.point([coordinates.lng, coordinates.lat]);
+
+
+                if (!map.getSource('route') || !map.getSource('route')._data.geometry.coordinates) return
+
+                const line = turf.lineString(map.getSource('route')._data.geometry.coordinates);
+
+                // Create a buffer around the line (adjust the distance as needed)
+                const buffered = updateBuffer(line, 1); // 0.1 km buffer
+
+                // Check if the mouse point is within the buffer
+                if (turf.booleanPointInPolygon(point, buffered)) {
+                    const snapped = turf.nearestPointOnLine(line, point);
+
+                    // Update the point location
+                    map.getSource('point').setData({
+                        'type': 'Feature',
+                        'properties': {},
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': snapped.geometry.coordinates
+                        }
+                    });
+
+                    const elevation = map.queryTerrainElevation(snapped.geometry.coordinates);
+                    console.log('elevation', elevation);
+                }
             });
 
             fetch(gpxFileURL)
@@ -148,6 +224,8 @@
                     const lineString = turf.lineString(lineCoords)
 
                     map.getSource("route").setData(lineString)
+
+                    mainData.geoJson = lineString
 
                     const coords = turf.coordAll(geoJson);
                     const start = coords[0]
@@ -200,9 +278,6 @@
                 .addTo(map);
         }
 
-
-
-
         function buildElevationChart(geojson) {
             const coords = turf.coordAll(geojson);
             const elevation = coords.map(d => d[2])
@@ -238,7 +313,6 @@
             });
         }
     </script>
-
 </body>
 
 </html>

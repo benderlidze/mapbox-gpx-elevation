@@ -39,6 +39,49 @@
         });
 
         map.on('load', () => {
+
+            map.addLayer({
+                "id": "contour-labels",
+                "type": "symbol",
+                "source": {
+                    type: 'vector',
+                    url: 'mapbox://mapbox.mapbox-terrain-v2'
+                },
+                "source-layer": "contour",
+                'layout': {
+                    'visibility': 'visible',
+                    'symbol-placement': 'line',
+                    'text-field': ['concat', ['to-string', ['get', 'ele']], 'm']
+                },
+                'paint': {
+                    'icon-color': '#877b59',
+                    'icon-halo-width': 1,
+                    'text-color': '#877b59',
+                    'text-halo-width': 1
+                },
+                'filter': ['==', ['%', ['get', 'ele'], 100], 0]
+            })
+
+            map.addLayer({
+                "id": "contours",
+                "type": "line",
+                "source": {
+                    type: 'vector',
+                    url: 'mapbox://mapbox.mapbox-terrain-v2'
+                },
+                "source-layer": "contour",
+                'layout': {
+                    'visibility': 'visible',
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                'paint': {
+                    'line-color': '#877b59',
+                    'line-width': 1
+                },
+                'filter': ['==', ['%', ['get', 'ele'], 100], 0]
+            })
+
             map.addSource('route', {
                 'type': 'geojson',
                 'data': turf.featureCollection([])

@@ -8,7 +8,8 @@
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.js"></script>
     <script src='https://unpkg.com/togeojson@0.16.0/togeojson.js'></script>
-    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7/turf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         body {
@@ -16,21 +17,320 @@
             padding: 0;
         }
 
-        #map {
-            position: absolute;
-            top: 0;
-            bottom: 0;
+        #map-container {
             width: 100%;
+            flex: 1;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        #container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #elevation-chart {
+            height: 30%;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #map-legend-container {
+            position: relative;
+        }
+
+        #map-legend {
+            position: absolute;
+            bottom: 30px;
+            left: 10px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
     </style>
 </head>
 
 <body>
-    <div id="map"></div>
-    <script>
-        const _0x4bfea9=_0x2fd7;(function(_0x3e419a,_0x3db356){const _0x2d5aa0=_0x2fd7,_0x594a94=_0x3e419a();while(!![]){try{const _0x3db5af=-parseInt(_0x2d5aa0(0x16a))/0x1+parseInt(_0x2d5aa0(0x14f))/0x2+parseInt(_0x2d5aa0(0x17c))/0x3*(parseInt(_0x2d5aa0(0x17d))/0x4)+-parseInt(_0x2d5aa0(0x169))/0x5+-parseInt(_0x2d5aa0(0x146))/0x6+-parseInt(_0x2d5aa0(0x17e))/0x7+parseInt(_0x2d5aa0(0x17a))/0x8*(parseInt(_0x2d5aa0(0x15f))/0x9);if(_0x3db5af===_0x3db356)break;else _0x594a94['push'](_0x594a94['shift']());}catch(_0x9422b2){_0x594a94['push'](_0x594a94['shift']());}}}(_0x3132,0x52231));const gpxFileURL=_0x4bfea9(0x151);mapboxgl['accessToken']=_0x4bfea9(0x162);const map=new mapboxgl['Map']({'container':_0x4bfea9(0x187),'style':'https://tiles.stadiamaps.com/styles/outdoors.json?key=bc06701b-526f-47fe-afff-27877e93db72','center':{'lng':116.44699281267492,'lat':-8.373418469943047},'zoom':6.8});function _0x3132(){const _0x485142=['visible','#877b59','451074uGWwvk','geojson','rinjaniwp.gpx','text','addSource','style','className','innerText','display','line','alert','featureCollection','length','concat','get','5px','3627DLjzEV','center','contour','pk.eyJ1Ijoic2VyZ2JlciIsImEiOiJja3dwOWgzeGQwYWdyMm9xb2pkMDFvYmNuIn0.H9AJ_NLmDNYMed6dvu_Q0A','width','appendChild','text/xml','geoJson','round','div','1497890KeCorn','36070tnOmsA','#264BC2\x20','backgroundSize','createElement','forEach','alignItems','fontSize','color','addEventListener','coordAll','coord','vector','load','100%','contour-labels','123','22888FNhEwV','gpx','93xfsobd','13976cQNqZU','3533663vKFAhH','extend','mapbox://mapbox.mapbox-terrain-v2','LngLatBounds','getSource','addTo','contours','route','backgroundColor','map','symbol','addLayer','1px\x20solid\x20gray','ele','fitBounds','border','borderRadius','1859664xMASop','1.5rem','height','setData','log','justifyContent','then'];_0x3132=function(){return _0x485142;};return _0x3132();}map['on'](_0x4bfea9(0x176),()=>{const _0x95f243=_0x4bfea9;map[_0x95f243(0x140)]({'id':_0x95f243(0x178),'type':_0x95f243(0x13f),'source':{'type':_0x95f243(0x175),'url':_0x95f243(0x180)},'source-layer':_0x95f243(0x161),'layout':{'visibility':_0x95f243(0x14d),'symbol-placement':'line','text-field':[_0x95f243(0x15c),['to-string',['get',_0x95f243(0x142)]],'m']},'paint':{'icon-color':'#877b59','icon-halo-width':0x1,'text-color':_0x95f243(0x14e),'text-halo-width':0x1},'filter':['==',['%',['get',_0x95f243(0x142)],0x64],0x0]}),map[_0x95f243(0x140)]({'id':_0x95f243(0x184),'type':_0x95f243(0x158),'source':{'type':'vector','url':_0x95f243(0x180)},'source-layer':_0x95f243(0x161),'layout':{'visibility':_0x95f243(0x14d),'line-join':_0x95f243(0x167),'line-cap':_0x95f243(0x167)},'paint':{'line-color':_0x95f243(0x14e),'line-width':0x1},'filter':['==',['%',[_0x95f243(0x15d),_0x95f243(0x142)],0x64],0x0]}),map[_0x95f243(0x153)](_0x95f243(0x185),{'type':_0x95f243(0x150),'data':turf[_0x95f243(0x15a)]([])}),map[_0x95f243(0x140)]({'id':'route','type':'line','source':_0x95f243(0x185),'layout':{'line-join':_0x95f243(0x167),'line-cap':_0x95f243(0x167)},'paint':{'line-color':_0x95f243(0x16b),'line-width':0x8}}),fetch(gpxFileURL)[_0x95f243(0x14c)](function(_0x557f5c){const _0xf29ecb=_0x95f243;return _0x557f5c[_0xf29ecb(0x152)]();})[_0x95f243(0x14c)](function(_0x89c352){const _0x127e61=_0x95f243,_0x4f726e=toGeoJSON[_0x127e61(0x17b)](new DOMParser()['parseFromString'](_0x89c352,_0x127e61(0x165)));console[_0x127e61(0x14a)](_0x127e61(0x166),_0x4f726e);const _0x2143d7=turf[_0x127e61(0x173)](_0x4f726e)[_0x127e61(0x187)](_0x1bed90=>[_0x1bed90[0x0],_0x1bed90[0x1]]),_0x28c71c=turf['lineString'](_0x2143d7);map[_0x127e61(0x182)](_0x127e61(0x185))[_0x127e61(0x149)](_0x28c71c);const _0x3f35ee=turf[_0x127e61(0x173)](_0x4f726e),_0x4a1ec1=_0x3f35ee[0x0],_0x5354df=_0x3f35ee[_0x3f35ee[_0x127e61(0x15b)]-0x1];addStartEnd({'label':'A','coords':_0x4a1ec1}),addStartEnd({'label':'B','coords':_0x5354df});var _0x5cd563=new mapboxgl[(_0x127e61(0x181))]();_0x2143d7[_0x127e61(0x16e)](function(_0x1bf47b){const _0x294356=_0x127e61;console['log'](_0x294356(0x174),_0x1bf47b),_0x5cd563[_0x294356(0x17f)](_0x1bf47b);}),map[_0x127e61(0x143)](_0x5cd563,{'padding':0x96});});});function _0x2fd7(_0x40ad80,_0x1c0b2b){const _0x31328f=_0x3132();return _0x2fd7=function(_0x2fd705,_0x4241ef){_0x2fd705=_0x2fd705-0x13f;let _0x12660c=_0x31328f[_0x2fd705];return _0x12660c;},_0x2fd7(_0x40ad80,_0x1c0b2b);}function addStartEnd({label:_0x4fe82d,coords:_0x45766b}){const _0x3abe1d=_0x4bfea9,_0x3c7bd3=document[_0x3abe1d(0x16d)](_0x3abe1d(0x168)),_0x1da097=0x1e,_0x126236=0x1e,_0x2601ad=document[_0x3abe1d(0x16d)]('span');_0x2601ad[_0x3abe1d(0x156)]=_0x4fe82d,_0x2601ad[_0x3abe1d(0x154)][_0x3abe1d(0x171)]='white',_0x2601ad[_0x3abe1d(0x154)][_0x3abe1d(0x170)]=_0x3abe1d(0x147),_0x3c7bd3[_0x3abe1d(0x164)](_0x2601ad),_0x3c7bd3[_0x3abe1d(0x155)]='marker',_0x3c7bd3[_0x3abe1d(0x154)][_0x3abe1d(0x186)]='rgba(0,0,0,1)',_0x3c7bd3['style'][_0x3abe1d(0x145)]=_0x3abe1d(0x15e),_0x3c7bd3[_0x3abe1d(0x154)][_0x3abe1d(0x144)]=_0x3abe1d(0x141),_0x3c7bd3['style'][_0x3abe1d(0x163)]=_0x1da097+'px',_0x3c7bd3['style'][_0x3abe1d(0x148)]=_0x126236+'px',_0x3c7bd3[_0x3abe1d(0x154)][_0x3abe1d(0x16c)]=_0x3abe1d(0x177),_0x3c7bd3[_0x3abe1d(0x154)][_0x3abe1d(0x157)]='flex',_0x3c7bd3[_0x3abe1d(0x154)][_0x3abe1d(0x16f)]=_0x3abe1d(0x160),_0x3c7bd3[_0x3abe1d(0x154)][_0x3abe1d(0x14b)]='center',_0x3c7bd3[_0x3abe1d(0x172)]('click',()=>{const _0x5a4e5d=_0x3abe1d;window[_0x5a4e5d(0x159)](_0x5a4e5d(0x179));}),new mapboxgl['Marker'](_0x3c7bd3)['setLngLat'](_0x45766b)[_0x3abe1d(0x183)](map);}
-    </script>
 
+    <div id="container">
+        <div id="map-container">
+            <div id="map"></div>
+            <div id="map-legend-container">
+                <div id="map-legend"></div>
+            </div>
+        </div>
+        <div id="elevation-chart"></div>
+    </div>
+
+    <script>
+        const mainData = {}
+        const elevationChart = document.getElementById('elevation-chart');
+        const colorsArray = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'pink', 'brown', 'black', 'gray']
+        const mapLegend = document.getElementById('map-legend');
+
+        const gpxFileURL = 'RinjaniApr2009.gpx';
+        mapboxgl.accessToken = 'pk.eyJ1Ijoic2VyZ2JlciIsImEiOiJja3dwOWgzeGQwYWdyMm9xb2pkMDFvYmNuIn0.H9AJ_NLmDNYMed6dvu_Q0A';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            //style: 'https://tiles.stadiamaps.com/styles/outdoors.json?key=c6948310-631b-491a-b1d9-d1f9186c03ae', // style URL
+            style: 'https://tiles.stadiamaps.com/styles/outdoors.json?key=bc06701b-526f-47fe-afff-27877e93db72', // style URL
+            center: { lng: 116.44699281267492, lat: -8.373418469943047 },
+            zoom: 6.8
+        });
+
+        map.on('load', () => {
+
+            map.addLayer({
+                "id": "contour-labels",
+                "type": "symbol",
+                "source": {
+                    type: 'vector',
+                    url: 'mapbox://mapbox.mapbox-terrain-v2'
+                },
+                "source-layer": "contour",
+                'layout': {
+                    'visibility': 'visible',
+                    'symbol-placement': 'line',
+                    'text-field': ['concat', ['to-string', ['get', 'ele']], 'm']
+                },
+                'paint': {
+                    'icon-color': '#877b59',
+                    'icon-halo-width': 1,
+                    'text-color': '#877b59',
+                    'text-halo-width': 1
+                },
+                'filter': ['==', ['%', ['get', 'ele'], 100], 0]
+            })
+
+            map.addLayer({
+                "id": "contours",
+                "type": "line",
+                "source": {
+                    type: 'vector',
+                    url: 'mapbox://mapbox.mapbox-terrain-v2'
+                },
+                "source-layer": "contour",
+                'layout': {
+                    'visibility': 'visible',
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                'paint': {
+                    'line-color': '#877b59',
+                    'line-width': 1
+                },
+                'filter': ['==', ['%', ['get', 'ele'], 100], 0]
+            })
+
+            map.addSource('route', {
+                'type': 'geojson',
+                'data': turf.featureCollection([])
+            });
+            map.addLayer({
+                'id': 'route',
+                'type': 'line',
+                'source': 'route',
+                'layout': {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                'paint': {
+                    'line-color': ['get', 'color'],
+                    'line-width': 8
+                }
+            });
+
+            map.addSource('point', {
+                'type': 'geojson',
+                'data': {
+                    'type': 'FeatureCollection',
+                    'features': []
+                }
+            });
+
+            map.addLayer({
+                'id': 'point',
+                'type': 'circle',
+                'source': 'point',
+                'paint': {
+                    'circle-radius': 10,
+                    'circle-color': '#3887be'
+                }
+            });
+
+            // Add a new source for the buffer
+            map.addSource('routeBuffer', {
+                'type': 'geojson',
+                'data': {
+                    'type': 'Feature',
+                    'properties': {},
+                    'geometry': {
+                        'type': 'Polygon',
+                        'coordinates': [[]]
+                    }
+                }
+            });
+
+            // Add a new layer for the buffer (optional, for visualization)
+            map.addLayer({
+                'id': 'routeBuffer',
+                'type': 'fill',
+                'source': 'routeBuffer',
+                'layout': {},
+                'paint': {
+                    'fill-color': '#888',
+                    'fill-opacity': 0.1
+                }
+            });
+
+            fetch(gpxFileURL)
+                .then(function (response) {
+                    return response.text();
+                })
+                .then(function (xml) {
+                    const geoJson = toGeoJSON.gpx(new DOMParser().parseFromString(xml, "text/xml"))
+                    console.log('geoJson', geoJson);
+
+                    geoJson.features.forEach((element, index) => {
+                        element.properties.color = colorsArray[index % colorsArray.length]
+                    });
+
+                    addLegend(geoJson)
+
+                    buildElevationChart(geoJson)
+                    map.getSource("route").setData(geoJson)
+
+                    mainData.geoJson = geoJson
+
+                    const coords = turf.coordAll(geoJson);
+                    const start = coords[0]
+                    const end = coords[coords.length - 1]
+                    addStartEnd({ label: "A", coords: start })
+                    addStartEnd({ label: "B", coords: end })
+
+
+                    const bbox = turf.bbox(geoJson)
+                    console.log('bbox', bbox);
+                    map.fitBounds(bbox, { padding: 50 })
+
+                });
+
+        });
+
+        function addLegend(data) {
+            mapLegend.innerHTML = ""
+
+            const items = data.features.map(d => {
+                mapLegend.appendChild(buildItem({
+                    name: d.properties.name,
+                    color: d.properties.color
+                }))
+            })
+
+            function buildItem({ name, color }) {
+
+                const container = document.createElement('div')
+                container.style.display = "flex"
+                container.style.gap = "5px"
+                container.style.alignItems = "center"
+
+                const div = document.createElement('div')
+                div.style.display = "flex"
+                div.style.alignItems = "center"
+                div.innerText = name
+
+                const colorLine = document.createElement('div')
+                colorLine.style.width = "20px"
+                colorLine.style.height = "5px"
+                colorLine.style.backgroundColor = color
+
+                container.appendChild(colorLine)
+                container.appendChild(div)
+
+                return container
+            }
+        }
+
+        function addStartEnd({ label, coords }) {
+
+            // Create a DOM element for each marker.
+            const el = document.createElement('div');
+            const width = 30
+            const height = 30
+
+            const text = document.createElement('span')
+            text.innerText = label
+            text.style.color = "white"
+            text.style.fontSize = "1.5rem";
+            el.appendChild(text)
+
+            el.className = 'marker';
+            el.style.backgroundColor = "rgba(0,0,0,1)"
+            el.style.borderRadius = "5px"
+            el.style.border = "1px solid gray"
+            el.style.width = `${width}px`;
+            el.style.height = `${height}px`;
+            el.style.backgroundSize = '100%';
+            el.style.display = "flex"
+            el.style.alignItems = "center"
+            el.style.justifyContent = "center"
+
+            el.addEventListener('click', () => {
+                window.alert("123");
+            });
+
+            // Add markers to the map.
+            new mapboxgl.Marker(el)
+                .setLngLat(coords)
+                .addTo(map);
+        }
+
+        function buildElevationChart(geojson) {
+            const coords = turf.coordAll(geojson);
+            const elevation = coords.map(d => d[2])
+            const distance = coords.map((d, i) => i)
+
+            const canvas = document.createElement('canvas');
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            elevationChart.appendChild(canvas);
+
+            const chart = new Chart(canvas, {
+                type: 'line',
+                data: {
+                    labels: distance,
+                    datasets: [{
+                        label: 'Elevation',
+                        data: elevation,
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 3,
+                        fill: false
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>

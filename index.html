@@ -324,6 +324,12 @@
             // Moving Average smoothing
             elevation = movingAverage(elevation, 20);
 
+            // Find min and max values for x and y axes
+            const minDistance = Math.min(...cumulativeDistance);
+            const maxDistance = Math.max(...cumulativeDistance);
+            const minElevation = Math.min(...elevation);
+            const maxElevation = Math.max(...elevation);
+
             const chart = new Chart(canvas, {
                 type: 'line',
                 data: {
@@ -344,7 +350,8 @@
                     scales: {
                         y: {
                             beginAtZero: false,
-                            min: 600,
+                            // min: Math.floor(minElevation / 100) * 100, // Round down to nearest 100
+                            // max: Math.ceil(maxElevation / 100) * 100,  // Round up to nearest 100
                             title: {
                                 display: true,
                                 text: 'Elevation (m)'
@@ -357,6 +364,8 @@
                         },
                         x: {
                             type: 'linear',
+                            min: minDistance,
+                            max: maxDistance,
                             title: {
                                 display: true,
                                 text: 'Distance (km)'

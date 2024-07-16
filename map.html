@@ -17,9 +17,14 @@
             padding: 0;
         }
 
-        #map {
+        #map-container {
             width: 100%;
             flex: 1;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
         }
 
         #container {
@@ -36,6 +41,29 @@
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        #map-legend-container {
+            position: relative;
+        }
+
+        #map-legend {
+            position: absolute;
+            bottom: 30px;
+            left: 10px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
     </style>
 </head>
@@ -43,17 +71,20 @@
 <body>
 
     <div id="container">
-        <div id="map"></div>
+        <div id="map-container">
+            <div id="map"></div>
+            <div id="map-legend-container">
+                <div id="map-legend"></div>
+            </div>
+        </div>
         <div id="elevation-chart"></div>
     </div>
 
     <script>
-        //https://api.open-elevation.com/api/v1/lookup?locations=-8.355792,116.487428
-        //https://www.opentopodata.org/
-        //https://api.opentopodata.org/v1/srtm30m?locations=-8.341961,116.498117
-        //
         const mainData = {}
         const elevationChart = document.getElementById('elevation-chart');
+        const colorsArray = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'pink', 'brown', 'black', 'gray']
+        const mapLegend = document.getElementById('map-legend');
 
         const gpxFileURL = 'RinjaniApr2009.gpx';
         mapboxgl.accessToken = 'pk.eyJ1Ijoic2VyZ2JlciIsImEiOiJja3dwOWgzeGQwYWdyMm9xb2pkMDFvYmNuIn0.H9AJ_NLmDNYMed6dvu_Q0A';
@@ -122,7 +153,7 @@
                     'line-cap': 'round'
                 },
                 'paint': {
-                    'line-color': '#264BC2 ',
+                    'line-color': ['get', 'color'],
                     'line-width': 8
                 }
             });
@@ -170,45 +201,6 @@
                 }
             });
 
-            // Function to update the buffer
-            function updateBuffer(route, distance) {
-                const buffered = turf.buffer(route, distance, { units: 'kilometers' });
-                map.getSource('routeBuffer').setData(buffered);
-                return buffered;
-            }
-
-            // Update the mousemove event
-            map.on('mousemove', (e) => {
-                const coordinates = e.lngLat;
-                const point = turf.point([coordinates.lng, coordinates.lat]);
-
-
-                if (!map.getSource('route') || !map.getSource('route')._data.geometry.coordinates) return
-
-                const line = turf.lineString(map.getSource('route')._data.geometry.coordinates);
-
-                // Create a buffer around the line (adjust the distance as needed)
-                const buffered = updateBuffer(line, 1); // 0.1 km buffer
-
-                // Check if the mouse point is within the buffer
-                if (turf.booleanPointInPolygon(point, buffered)) {
-                    const snapped = turf.nearestPointOnLine(line, point);
-
-                    // Update the point location
-                    map.getSource('point').setData({
-                        'type': 'Feature',
-                        'properties': {},
-                        'geometry': {
-                            'type': 'Point',
-                            'coordinates': snapped.geometry.coordinates
-                        }
-                    });
-
-                    const elevation = map.queryTerrainElevation(snapped.geometry.coordinates);
-                    console.log('elevation', elevation);
-                }
-            });
-
             fetch(gpxFileURL)
                 .then(function (response) {
                     return response.text();
@@ -217,32 +209,65 @@
                     const geoJson = toGeoJSON.gpx(new DOMParser().parseFromString(xml, "text/xml"))
                     console.log('geoJson', geoJson);
 
+                    geoJson.features.forEach((element, index) => {
+                        element.properties.color = colorsArray[index % colorsArray.length]
+                    });
+
+                    addLegend(geoJson)
+
                     buildElevationChart(geoJson)
+                    map.getSource("route").setData(geoJson)
 
-                    //points to linestring 
-                    const lineCoords = turf.coordAll(geoJson).map(d => [d[0], d[1]])
-                    const lineString = turf.lineString(lineCoords)
-
-                    map.getSource("route").setData(lineString)
-
-                    mainData.geoJson = lineString
+                    mainData.geoJson = geoJson
 
                     const coords = turf.coordAll(geoJson);
                     const start = coords[0]
                     const end = coords[coords.length - 1]
-
                     addStartEnd({ label: "A", coords: start })
                     addStartEnd({ label: "B", coords: end })
 
-                    var bounds = new mapboxgl.LngLatBounds();
-                    lineCoords.forEach(function (coord) {
-                        bounds.extend(coord);
-                    });
-                    map.fitBounds(bounds, { padding: 150 });
+
+                    const bbox = turf.bbox(geoJson)
+                    console.log('bbox', bbox);
+                    map.fitBounds(bbox, { padding: 50 })
 
                 });
 
         });
+
+        function addLegend(data) {
+            mapLegend.innerHTML = ""
+
+            const items = data.features.map(d => {
+                mapLegend.appendChild(buildItem({
+                    name: d.properties.name,
+                    color: d.properties.color
+                }))
+            })
+
+            function buildItem({ name, color }) {
+
+                const container = document.createElement('div')
+                container.style.display = "flex"
+                container.style.gap = "5px"
+                container.style.alignItems = "center"
+
+                const div = document.createElement('div')
+                div.style.display = "flex"
+                div.style.alignItems = "center"
+                div.innerText = name
+
+                const colorLine = document.createElement('div')
+                colorLine.style.width = "20px"
+                colorLine.style.height = "5px"
+                colorLine.style.backgroundColor = color
+
+                container.appendChild(colorLine)
+                container.appendChild(div)
+
+                return container
+            }
+        }
 
         function addStartEnd({ label, coords }) {
 
@@ -280,16 +305,17 @@
 
         function buildElevationChart(geojson) {
             const coords = turf.coordAll(geojson);
-            const elevation = coords.map(d => d[2])
+            let elevation = coords.map(d => d[2])
             const distance = coords.map((d, i) => i)
-
-            console.log('elevation', elevation);
-            console.log('distance', distance);
 
             const canvas = document.createElement('canvas');
             canvas.style.width = '100%';
+            canvas.style.maxWidth = '1000px';
             canvas.style.height = '100%';
             elevationChart.appendChild(canvas);
+
+            // 2. Moving Average
+            elevation = movingAverage(elevation, 20);
 
             const chart = new Chart(canvas, {
                 type: 'line',
@@ -300,17 +326,56 @@
                         data: elevation,
                         borderColor: 'rgba(255, 99, 132, 1)',
                         borderWidth: 3,
-                        fill: false
+                        fill: true,
+                        tension: 0.4, // This enables Bezier curve smoothing
+                        pointRadius: 0, // This removes the points
+                        pointHoverRadius: 5, // T
                     }]
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: false,
+                            min: 1000, //
                         }
                     }
                 }
             });
+        }
+
+
+
+        // 1. Data Reduction
+        function reduceData(data, labels, targetLength) {
+            if (data.length <= targetLength) {
+                return [data, labels];
+            }
+
+            const factor = Math.floor(data.length / targetLength);
+            const reducedData = [];
+            const reducedLabels = [];
+
+            for (let i = 0; i < data.length; i += factor) {
+                reducedData.push(data[i]);
+                reducedLabels.push(labels[i]);
+            }
+
+            return [reducedData, reducedLabels];
+        }
+
+        // 2. Moving Average
+        function movingAverage(data, windowSize) {
+            const result = [];
+            for (let i = 0; i < data.length; i++) {
+                const start = Math.max(0, i - windowSize + 1);
+                const end = i + 1;
+                const window = data.slice(start, end);
+                const average = window.reduce((sum, val) => sum + val, 0) / window.length;
+                result.push(average);
+            }
+            return result;
         }
     </script>
 </body>

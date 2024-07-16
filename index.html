@@ -41,6 +41,10 @@
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+            display: flex;
+            align-items: center;
+            justify-content: center
         }
 
         #map-legend-container {
@@ -306,6 +310,7 @@
 
             const canvas = document.createElement('canvas');
             canvas.style.width = '100%';
+            canvas.style.maxWidth = '1000px';
             canvas.style.height = '100%';
             elevationChart.appendChild(canvas);
 
@@ -322,6 +327,8 @@
                     }]
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
                     scales: {
                         y: {
                             beginAtZero: true

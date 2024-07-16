@@ -305,7 +305,7 @@
 
         function buildElevationChart(geojson) {
             const coords = turf.coordAll(geojson);
-            const elevation = coords.map(d => d[2])
+            let elevation = coords.map(d => d[2])
             const distance = coords.map((d, i) => i)
 
             const canvas = document.createElement('canvas');
@@ -313,6 +313,9 @@
             canvas.style.maxWidth = '1000px';
             canvas.style.height = '100%';
             elevationChart.appendChild(canvas);
+
+            // 2. Moving Average
+            elevation = movingAverage(elevation, 20);
 
             const chart = new Chart(canvas, {
                 type: 'line',
@@ -323,7 +326,10 @@
                         data: elevation,
                         borderColor: 'rgba(255, 99, 132, 1)',
                         borderWidth: 3,
-                        fill: false
+                        fill: true,
+                        tension: 0.4, // This enables Bezier curve smoothing
+                        pointRadius: 0, // This removes the points
+                        pointHoverRadius: 5, // T
                     }]
                 },
                 options: {
@@ -336,6 +342,39 @@
                     }
                 }
             });
+        }
+
+
+
+        // 1. Data Reduction
+        function reduceData(data, labels, targetLength) {
+            if (data.length <= targetLength) {
+                return [data, labels];
+            }
+
+            const factor = Math.floor(data.length / targetLength);
+            const reducedData = [];
+            const reducedLabels = [];
+
+            for (let i = 0; i < data.length; i += factor) {
+                reducedData.push(data[i]);
+                reducedLabels.push(labels[i]);
+            }
+
+            return [reducedData, reducedLabels];
+        }
+
+        // 2. Moving Average
+        function movingAverage(data, windowSize) {
+            const result = [];
+            for (let i = 0; i < data.length; i++) {
+                const start = Math.max(0, i - windowSize + 1);
+                const end = i + 1;
+                const window = data.slice(start, end);
+                const average = window.reduce((sum, val) => sum + val, 0) / window.length;
+                result.push(average);
+            }
+            return result;
         }
     </script>
 </body>

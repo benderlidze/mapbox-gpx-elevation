@@ -81,7 +81,338 @@
     </div>
 
     <script>
-        function _0x43cf() { const _0x20d50b = ['style', 'fontSize', 'Feature', '123', 'text', 'brown', 'accessToken', 'justifyContent', '5px', 'vector', 'green', 'length', 'load', 'pk.eyJ1Ijoic2VyZ2JlciIsImEiOiJja3dwOWgzeGQwYWdyMm9xb2pkMDFvYmNuIn0.H9AJ_NLmDNYMed6dvu_Q0A', 'round', 'text/xml', 'flex', '#3887be', 'line', '1.5rem', '232svZFxD', 'red', 'max', 'setData', 'RinjaniApr2009.gpx', 'fitBounds', 'addLayer', 'innerText', 'then', 'parseFromString', 'Elevation', 'get', '2501928rrLhou', 'concat', 'rgba(255,\x2099,\x20132,\x201)', 'reduce', '10657872IrCKkB', 'slice', 'ele', '4146945KCuEia', 'elevation-chart', '1000px', 'name', 'maxWidth', 'pink', 'circle', '16603CnEKav', 'createElement', 'height', 'contour-labels', 'routeBuffer', 'gpx', 'backgroundSize', 'marker', 'borderRadius', 'gap', 'span', 'gray', 'rgba(0,0,0,1)', 'symbol', '20px', 'purple', 'appendChild', '9468810yWsHAu', 'addTo', 'addSource', 'visible', 'border', 'color', 'fill', 'https://tiles.stadiamaps.com/styles/outdoors.json?key=bc06701b-526f-47fe-afff-27877e93db72', 'route', 'white', 'map', 'push', 'properties', 'features', '382179LGsiry', '540160VCuCif', 'yellow', 'geojson', 'floor', '35hhEJzb', 'click', 'map-legend', 'mapbox://mapbox.mapbox-terrain-v2', '#888', '#877b59', 'Polygon', 'contours', 'coordAll', 'contour', 'forEach', 'div', 'canvas', 'log', 'geoJson', 'to-string', 'alignItems', 'Map', 'center', 'addEventListener', 'black', 'width', 'orange', 'bbox']; _0x43cf = function () { return _0x20d50b; }; return _0x43cf(); } const _0xa5f091 = _0x1956; (function (_0x2ce4e1, _0x39f642) { const _0x43f13a = _0x1956, _0x8011e = _0x2ce4e1(); while (!![]) { try { const _0x43d550 = -parseInt(_0x43f13a(0x71)) / 0x1 + parseInt(_0x43f13a(0xcd)) / 0x2 + -parseInt(_0x43f13a(0x6a)) / 0x3 + parseInt(_0x43f13a(0x91)) / 0x4 * (-parseInt(_0x43f13a(0x95)) / 0x5) + parseInt(_0x43f13a(0x82)) / 0x6 + parseInt(_0x43f13a(0x90)) / 0x7 * (parseInt(_0x43f13a(0xc1)) / 0x8) + -parseInt(_0x43f13a(0xd1)) / 0x9; if (_0x43d550 === _0x39f642) break; else _0x8011e['push'](_0x8011e['shift']()); } catch (_0x5a39ef) { _0x8011e['push'](_0x8011e['shift']()); } } }(_0x43cf, 0xd7d26)); const mainData = {}, elevationChart = document['getElementById'](_0xa5f091(0x6b)), colorsArray = [_0xa5f091(0xc2), _0xa5f091(0xb7), 'blue', _0xa5f091(0x92), _0xa5f091(0x80), _0xa5f091(0xab), _0xa5f091(0x6f), _0xa5f091(0xb2), _0xa5f091(0xa9), _0xa5f091(0x7c)], mapLegend = document['getElementById'](_0xa5f091(0x97)), gpxFileURL = _0xa5f091(0xc5); mapboxgl[_0xa5f091(0xb3)] = _0xa5f091(0xba); const map = new mapboxgl[(_0xa5f091(0xa6))]({ 'container': _0xa5f091(0x8c), 'style': _0xa5f091(0x89), 'center': { 'lng': 116.44699281267492, 'lat': -8.373418469943047 }, 'zoom': 6.8 }); map['on'](_0xa5f091(0xb9), () => { const _0x16390b = _0xa5f091; map[_0x16390b(0xc7)]({ 'id': _0x16390b(0x74), 'type': _0x16390b(0x7e), 'source': { 'type': _0x16390b(0xb6), 'url': _0x16390b(0x98) }, 'source-layer': _0x16390b(0x9e), 'layout': { 'visibility': 'visible', 'symbol-placement': 'line', 'text-field': [_0x16390b(0xce), [_0x16390b(0xa4), [_0x16390b(0xcc), _0x16390b(0x69)]], 'm'] }, 'paint': { 'icon-color': _0x16390b(0x9a), 'icon-halo-width': 0x1, 'text-color': _0x16390b(0x9a), 'text-halo-width': 0x1 }, 'filter': ['==', ['%', [_0x16390b(0xcc), _0x16390b(0x69)], 0x64], 0x0] }), map['addLayer']({ 'id': _0x16390b(0x9c), 'type': _0x16390b(0xbf), 'source': { 'type': _0x16390b(0xb6), 'url': 'mapbox://mapbox.mapbox-terrain-v2' }, 'source-layer': 'contour', 'layout': { 'visibility': _0x16390b(0x85), 'line-join': 'round', 'line-cap': 'round' }, 'paint': { 'line-color': _0x16390b(0x9a), 'line-width': 0x1 }, 'filter': ['==', ['%', ['get', _0x16390b(0x69)], 0x64], 0x0] }), map[_0x16390b(0x84)]('route', { 'type': _0x16390b(0x93), 'data': turf['featureCollection']([]) }), map['addLayer']({ 'id': 'route', 'type': 'line', 'source': _0x16390b(0x8a), 'layout': { 'line-join': _0x16390b(0xbb), 'line-cap': _0x16390b(0xbb) }, 'paint': { 'line-color': [_0x16390b(0xcc), _0x16390b(0x87)], 'line-width': 0x8 } }), map[_0x16390b(0x84)]('point', { 'type': 'geojson', 'data': { 'type': 'FeatureCollection', 'features': [] } }), map[_0x16390b(0xc7)]({ 'id': 'point', 'type': _0x16390b(0x70), 'source': 'point', 'paint': { 'circle-radius': 0xa, 'circle-color': _0x16390b(0xbe) } }), map[_0x16390b(0x84)](_0x16390b(0x75), { 'type': _0x16390b(0x93), 'data': { 'type': _0x16390b(0xaf), 'properties': {}, 'geometry': { 'type': _0x16390b(0x9b), 'coordinates': [[]] } } }), map[_0x16390b(0xc7)]({ 'id': _0x16390b(0x75), 'type': _0x16390b(0x88), 'source': _0x16390b(0x75), 'layout': {}, 'paint': { 'fill-color': _0x16390b(0x99), 'fill-opacity': 0.1 } }), fetch(gpxFileURL)[_0x16390b(0xc9)](function (_0x252688) { const _0x20b126 = _0x16390b; return _0x252688[_0x20b126(0xb1)](); })['then'](function (_0x5a8809) { const _0x47fb44 = _0x16390b, _0x50ec4b = toGeoJSON[_0x47fb44(0x76)](new DOMParser()[_0x47fb44(0xca)](_0x5a8809, _0x47fb44(0xbc))); console[_0x47fb44(0xa2)](_0x47fb44(0xa3), _0x50ec4b), _0x50ec4b[_0x47fb44(0x8f)][_0x47fb44(0x9f)]((_0x2aa1bb, _0x1f0044) => { const _0x31a8b1 = _0x47fb44; _0x2aa1bb['properties'][_0x31a8b1(0x87)] = colorsArray[_0x1f0044 % colorsArray[_0x31a8b1(0xb8)]]; }), addLegend(_0x50ec4b), buildElevationChart(_0x50ec4b), map['getSource']('route')[_0x47fb44(0xc4)](_0x50ec4b), mainData[_0x47fb44(0xa3)] = _0x50ec4b; const _0x1bdd1c = turf[_0x47fb44(0x9d)](_0x50ec4b), _0x3b4f59 = _0x1bdd1c[0x0], _0x327b5d = _0x1bdd1c[_0x1bdd1c['length'] - 0x1]; addStartEnd({ 'label': 'A', 'coords': _0x3b4f59 }), addStartEnd({ 'label': 'B', 'coords': _0x327b5d }); const _0x53b0da = turf[_0x47fb44(0xac)](_0x50ec4b); console[_0x47fb44(0xa2)]('bbox', _0x53b0da), map[_0x47fb44(0xc6)](_0x53b0da, { 'padding': 0x32 }); }); }); function addLegend(_0x3310ac) { mapLegend['innerHTML'] = ''; const _0x52a2be = _0x3310ac['features']['map'](_0x73a882 => { const _0x3ddbcb = _0x1956; mapLegend['appendChild'](_0x526e00({ 'name': _0x73a882[_0x3ddbcb(0x8e)][_0x3ddbcb(0x6d)], 'color': _0x73a882[_0x3ddbcb(0x8e)]['color'] })); }); function _0x526e00({ name: _0x1cdbb9, color: _0x56342 }) { const _0x464b56 = _0x1956, _0x4f972c = document[_0x464b56(0x72)](_0x464b56(0xa0)); _0x4f972c['style']['display'] = _0x464b56(0xbd), _0x4f972c[_0x464b56(0xad)][_0x464b56(0x7a)] = '5px', _0x4f972c['style'][_0x464b56(0xa5)] = _0x464b56(0xa7); const _0x5c6343 = document[_0x464b56(0x72)](_0x464b56(0xa0)); _0x5c6343[_0x464b56(0xad)]['display'] = _0x464b56(0xbd), _0x5c6343[_0x464b56(0xad)]['alignItems'] = _0x464b56(0xa7), _0x5c6343[_0x464b56(0xc8)] = _0x1cdbb9; const _0x284d08 = document[_0x464b56(0x72)](_0x464b56(0xa0)); return _0x284d08['style'][_0x464b56(0xaa)] = _0x464b56(0x7f), _0x284d08[_0x464b56(0xad)]['height'] = _0x464b56(0xb5), _0x284d08[_0x464b56(0xad)]['backgroundColor'] = _0x56342, _0x4f972c['appendChild'](_0x284d08), _0x4f972c[_0x464b56(0x81)](_0x5c6343), _0x4f972c; } } function _0x1956(_0x3940a6, _0x37e43c) { const _0x43cfdb = _0x43cf(); return _0x1956 = function (_0x195675, _0x209346) { _0x195675 = _0x195675 - 0x69; let _0xa73ecf = _0x43cfdb[_0x195675]; return _0xa73ecf; }, _0x1956(_0x3940a6, _0x37e43c); } function addStartEnd({ label: _0x95fcd1, coords: _0x225445 }) { const _0x2639dc = _0xa5f091, _0x961eb0 = document[_0x2639dc(0x72)](_0x2639dc(0xa0)), _0x2c9b53 = 0x1e, _0x14c019 = 0x1e, _0x5c8471 = document['createElement'](_0x2639dc(0x7b)); _0x5c8471['innerText'] = _0x95fcd1, _0x5c8471[_0x2639dc(0xad)][_0x2639dc(0x87)] = _0x2639dc(0x8b), _0x5c8471[_0x2639dc(0xad)][_0x2639dc(0xae)] = _0x2639dc(0xc0), _0x961eb0[_0x2639dc(0x81)](_0x5c8471), _0x961eb0['className'] = _0x2639dc(0x78), _0x961eb0[_0x2639dc(0xad)]['backgroundColor'] = _0x2639dc(0x7d), _0x961eb0[_0x2639dc(0xad)][_0x2639dc(0x79)] = _0x2639dc(0xb5), _0x961eb0[_0x2639dc(0xad)][_0x2639dc(0x86)] = '1px\x20solid\x20gray', _0x961eb0['style']['width'] = _0x2c9b53 + 'px', _0x961eb0['style'][_0x2639dc(0x73)] = _0x14c019 + 'px', _0x961eb0[_0x2639dc(0xad)][_0x2639dc(0x77)] = '100%', _0x961eb0[_0x2639dc(0xad)]['display'] = _0x2639dc(0xbd), _0x961eb0[_0x2639dc(0xad)]['alignItems'] = _0x2639dc(0xa7), _0x961eb0[_0x2639dc(0xad)][_0x2639dc(0xb4)] = _0x2639dc(0xa7), _0x961eb0[_0x2639dc(0xa8)](_0x2639dc(0x96), () => { const _0x1fa6a1 = _0x2639dc; window['alert'](_0x1fa6a1(0xb0)); }), new mapboxgl['Marker'](_0x961eb0)['setLngLat'](_0x225445)[_0x2639dc(0x83)](map); } function buildElevationChart(_0x2e60c2) { const _0x285a2d = _0xa5f091, _0x49ff05 = turf[_0x285a2d(0x9d)](_0x2e60c2); let _0x5d41cb = _0x49ff05[_0x285a2d(0x8c)](_0x309d24 => _0x309d24[0x2]); const _0x2956c0 = _0x49ff05[_0x285a2d(0x8c)]((_0x10ed1, _0x595a18) => _0x595a18), _0x3dd50b = document[_0x285a2d(0x72)](_0x285a2d(0xa1)); _0x3dd50b[_0x285a2d(0xad)][_0x285a2d(0xaa)] = '100%', _0x3dd50b[_0x285a2d(0xad)][_0x285a2d(0x6e)] = _0x285a2d(0x6c), _0x3dd50b[_0x285a2d(0xad)][_0x285a2d(0x73)] = '100%', elevationChart['appendChild'](_0x3dd50b), _0x5d41cb = movingAverage(_0x5d41cb, 0x14); const _0x151b4b = new Chart(_0x3dd50b, { 'type': _0x285a2d(0xbf), 'data': { 'labels': _0x2956c0, 'datasets': [{ 'label': _0x285a2d(0xcb), 'data': _0x5d41cb, 'borderColor': _0x285a2d(0xcf), 'borderWidth': 0x3, 'fill': !![], 'tension': 0.4, 'pointRadius': 0x0, 'pointHoverRadius': 0x5 }] }, 'options': { 'responsive': !![], 'maintainAspectRatio': ![], 'scales': { 'y': { 'beginAtZero': ![], 'min': 0x3e8 } } } }); } function reduceData(_0x5d08d8, _0x1a1404, _0xabc5fa) { const _0x7e8da8 = _0xa5f091; if (_0x5d08d8[_0x7e8da8(0xb8)] <= _0xabc5fa) return [_0x5d08d8, _0x1a1404]; const _0x2f4a34 = Math[_0x7e8da8(0x94)](_0x5d08d8[_0x7e8da8(0xb8)] / _0xabc5fa), _0x531f21 = [], _0x2de4f1 = []; for (let _0x9085c1 = 0x0; _0x9085c1 < _0x5d08d8[_0x7e8da8(0xb8)]; _0x9085c1 += _0x2f4a34) { _0x531f21[_0x7e8da8(0x8d)](_0x5d08d8[_0x9085c1]), _0x2de4f1['push'](_0x1a1404[_0x9085c1]); } return [_0x531f21, _0x2de4f1]; } function movingAverage(_0x47e246, _0x102f0c) { const _0x162c34 = _0xa5f091, _0x16dc8c = []; for (let _0xbf9ac1 = 0x0; _0xbf9ac1 < _0x47e246[_0x162c34(0xb8)]; _0xbf9ac1++) { const _0x1fb360 = Math[_0x162c34(0xc3)](0x0, _0xbf9ac1 - _0x102f0c + 0x1), _0x962427 = _0xbf9ac1 + 0x1, _0x14533e = _0x47e246[_0x162c34(0xd2)](_0x1fb360, _0x962427), _0x338bd8 = _0x14533e[_0x162c34(0xd0)]((_0x2f956f, _0x14dce8) => _0x2f956f + _0x14dce8, 0x0) / _0x14533e[_0x162c34(0xb8)]; _0x16dc8c[_0x162c34(0x8d)](_0x338bd8); } return _0x16dc8c; }
+        const mainData = {}
+        const elevationChart = document.getElementById('elevation-chart');
+        const colorsArray = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'pink', 'brown', 'black', 'gray']
+        const mapLegend = document.getElementById('map-legend');
+
+        const gpxFileURL = 'RinjaniApr2009.gpx';
+        mapboxgl.accessToken = 'pk.eyJ1Ijoic2VyZ2JlciIsImEiOiJja3dwOWgzeGQwYWdyMm9xb2pkMDFvYmNuIn0.H9AJ_NLmDNYMed6dvu_Q0A';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            //style: 'https://tiles.stadiamaps.com/styles/outdoors.json?key=c6948310-631b-491a-b1d9-d1f9186c03ae', // style URL
+            style: 'https://tiles.stadiamaps.com/styles/outdoors.json?key=bc06701b-526f-47fe-afff-27877e93db72', // style URL
+            center: { lng: 116.44699281267492, lat: -8.373418469943047 },
+            zoom: 6.8
+        });
+
+        map.on('load', () => {
+
+            map.addLayer({
+                "id": "contour-labels",
+                "type": "symbol",
+                "source": {
+                    type: 'vector',
+                    url: 'mapbox://mapbox.mapbox-terrain-v2'
+                },
+                "source-layer": "contour",
+                'layout': {
+                    'visibility': 'visible',
+                    'symbol-placement': 'line',
+                    'text-field': ['concat', ['to-string', ['get', 'ele']], 'm']
+                },
+                'paint': {
+                    'icon-color': '#877b59',
+                    'icon-halo-width': 1,
+                    'text-color': '#877b59',
+                    'text-halo-width': 1
+                },
+                'filter': ['==', ['%', ['get', 'ele'], 100], 0]
+            })
+
+            map.addLayer({
+                "id": "contours",
+                "type": "line",
+                "source": {
+                    type: 'vector',
+                    url: 'mapbox://mapbox.mapbox-terrain-v2'
+                },
+                "source-layer": "contour",
+                'layout': {
+                    'visibility': 'visible',
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                'paint': {
+                    'line-color': '#877b59',
+                    'line-width': 1
+                },
+                'filter': ['==', ['%', ['get', 'ele'], 100], 0]
+            })
+
+            map.addSource('route', {
+                'type': 'geojson',
+                'data': turf.featureCollection([])
+            });
+            map.addLayer({
+                'id': 'route',
+                'type': 'line',
+                'source': 'route',
+                'layout': {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                'paint': {
+                    'line-color': ['get', 'color'],
+                    'line-width': 8
+                }
+            });
+
+            map.addSource('point', {
+                'type': 'geojson',
+                'data': {
+                    'type': 'FeatureCollection',
+                    'features': []
+                }
+            });
+
+            map.addLayer({
+                'id': 'point',
+                'type': 'circle',
+                'source': 'point',
+                'paint': {
+                    'circle-radius': 10,
+                    'circle-color': '#3887be'
+                }
+            });
+
+            // Add a new source for the buffer
+            map.addSource('routeBuffer', {
+                'type': 'geojson',
+                'data': {
+                    'type': 'Feature',
+                    'properties': {},
+                    'geometry': {
+                        'type': 'Polygon',
+                        'coordinates': [[]]
+                    }
+                }
+            });
+
+            // Add a new layer for the buffer (optional, for visualization)
+            map.addLayer({
+                'id': 'routeBuffer',
+                'type': 'fill',
+                'source': 'routeBuffer',
+                'layout': {},
+                'paint': {
+                    'fill-color': '#888',
+                    'fill-opacity': 0.1
+                }
+            });
+
+            fetch(gpxFileURL)
+                .then(function (response) {
+                    return response.text();
+                })
+                .then(function (xml) {
+                    const geoJson = toGeoJSON.gpx(new DOMParser().parseFromString(xml, "text/xml"))
+                    console.log('geoJson', geoJson);
+
+                    geoJson.features.forEach((element, index) => {
+                        element.properties.color = colorsArray[index % colorsArray.length]
+                    });
+
+                    addLegend(geoJson)
+
+                    buildElevationChart(geoJson)
+                    map.getSource("route").setData(geoJson)
+
+                    mainData.geoJson = geoJson
+
+                    const coords = turf.coordAll(geoJson);
+                    const start = coords[0]
+                    const end = coords[coords.length - 1]
+                    addStartEnd({ label: "A", coords: start })
+                    addStartEnd({ label: "B", coords: end })
+
+                    const bbox = turf.bbox(geoJson)
+                    console.log('bbox', bbox);
+                    map.fitBounds(bbox, { padding: 50 })
+
+                });
+
+        });
+
+        function addLegend(data) {
+            mapLegend.innerHTML = ""
+
+            const items = data.features.map(d => {
+                mapLegend.appendChild(buildItem({
+                    name: d.properties.name,
+                    color: d.properties.color
+                }))
+            })
+
+            function buildItem({ name, color }) {
+
+                const container = document.createElement('div')
+                container.style.display = "flex"
+                container.style.gap = "5px"
+                container.style.alignItems = "center"
+
+                const div = document.createElement('div')
+                div.style.display = "flex"
+                div.style.alignItems = "center"
+                div.innerText = name
+
+                const colorLine = document.createElement('div')
+                colorLine.style.width = "20px"
+                colorLine.style.height = "5px"
+                colorLine.style.backgroundColor = color
+
+                container.appendChild(colorLine)
+                container.appendChild(div)
+
+                return container
+            }
+        }
+
+        function addStartEnd({ label, coords }) {
+
+            // Create a DOM element for each marker.
+            const el = document.createElement('div');
+            const width = 30
+            const height = 30
+
+            const text = document.createElement('span')
+            text.innerText = label
+            text.style.color = "white"
+            text.style.fontSize = "1.5rem";
+            el.appendChild(text)
+
+            el.className = 'marker';
+            el.style.backgroundColor = "rgba(0,0,0,1)"
+            el.style.borderRadius = "5px"
+            el.style.border = "1px solid gray"
+            el.style.width = `${width}px`;
+            el.style.height = `${height}px`;
+            el.style.backgroundSize = '100%';
+            el.style.display = "flex"
+            el.style.alignItems = "center"
+            el.style.justifyContent = "center"
+
+            el.addEventListener('click', () => {
+                window.alert("123");
+            });
+
+            // Add markers to the map.
+            new mapboxgl.Marker(el)
+                .setLngLat(coords)
+                .addTo(map);
+        }
+
+        function buildElevationChart(geojson) {
+            const coords = turf.coordAll(geojson);
+            let elevation = coords.map(d => d[2]);
+
+            // Calculate cumulative distances using Turf
+            let cumulativeDistance = [0];
+            for (let i = 1; i < coords.length; i++) {
+                const from = turf.point([coords[i - 1][0], coords[i - 1][1]]);
+                const to = turf.point([coords[i][0], coords[i][1]]);
+                const distance = turf.distance(from, to, { units: 'kilometers' });
+                cumulativeDistance.push(cumulativeDistance[i - 1] + distance);
+            }
+
+            const canvas = document.createElement('canvas');
+            canvas.style.width = '100%';
+            canvas.style.maxWidth = '1000px';
+            canvas.style.height = '100%';
+            elevationChart.appendChild(canvas);
+
+            // Moving Average smoothing
+            elevation = movingAverage(elevation, 20);
+
+            const chart = new Chart(canvas, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Elevation',
+                        data: elevation.map((elev, index) => ({ x: cumulativeDistance[index], y: elev })),
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 0,
+                        pointHoverRadius: 5,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 600,
+                            title: {
+                                display: true,
+                                text: 'Elevation (m)'
+                            },
+                            ticks: {
+                                callback: function (value) {
+                                    return value + 'm';
+                                }
+                            }
+                        },
+                        x: {
+                            type: 'linear',
+                            title: {
+                                display: true,
+                                text: 'Distance (km)'
+                            },
+                            ticks: {
+                                callback: function (value) {
+                                    return value.toFixed(1) + 'km';
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    return `Elevation: ${context.parsed.y.toFixed(0)}m, Distance: ${context.parsed.x.toFixed(2)}km`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+
+
+        // 1. Data Reduction
+        function reduceData(data, labels, targetLength) {
+            if (data.length <= targetLength) {
+                return [data, labels];
+            }
+
+            const factor = Math.floor(data.length / targetLength);
+            const reducedData = [];
+            const reducedLabels = [];
+
+            for (let i = 0; i < data.length; i += factor) {
+                reducedData.push(data[i]);
+                reducedLabels.push(labels[i]);
+            }
+
+            return [reducedData, reducedLabels];
+        }
+
+        // 2. Moving Average
+        function movingAverage(data, windowSize) {
+            const result = [];
+            for (let i = 0; i < data.length; i++) {
+                const start = Math.max(0, i - windowSize + 1);
+                const end = i + 1;
+                const window = data.slice(start, end);
+                const average = window.reduce((sum, val) => sum + val, 0) / window.length;
+                result.push(average);
+            }
+            return result;
+        }
     </script>
 </body>
 

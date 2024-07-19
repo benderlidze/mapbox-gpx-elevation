@@ -10,6 +10,7 @@
     <script src='https://unpkg.com/togeojson@0.16.0/togeojson.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7/turf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@tmcw/togeojson@5.8.1/dist/togeojson.umd.js"></script>
 
     <style>
         body {
@@ -86,7 +87,7 @@
         const colorsArray = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'pink', 'brown', 'black', 'gray']
         const mapLegend = document.getElementById('map-legend');
 
-        const gpxFileURL = 'gpx/Gunung Rinjani via Rinjani Track.gpx';
+        const gpxFileURL = 'gpx/Gunung Rinjani via Rinjani Track (2).gpx';
         mapboxgl.accessToken = 'pk.eyJ1Ijoic2VyZ2JlciIsImEiOiJja3dwOWgzeGQwYWdyMm9xb2pkMDFvYmNuIn0.H9AJ_NLmDNYMed6dvu_Q0A';
         const map = new mapboxgl.Map({
             container: 'map',
@@ -432,24 +433,30 @@
             const gpxDoc = parser.parseFromString(gpxString, "text/xml");
 
             // Convert to GeoJSON using togeojson
-            let geoJSON = toGeoJSON.gpx(gpxDoc);
+            const geoJSON = toGeoJSON.gpx(gpxDoc);
 
-            // Add elevation data to the GeoJSON
-            geoJSON.features.forEach(feature => {
-                if (feature.geometry.type === "LineString") {
-                    const trkpts = gpxDoc.querySelectorAll("trkpt");
-                    feature.geometry.coordinates = Array.from(trkpts).map((trkpt, index) => {
-                        const lon = parseFloat(trkpt.getAttribute("lon"));
-                        const lat = parseFloat(trkpt.getAttribute("lat"));
-                        const ele = parseFloat(trkpt.getAttribute("ele"));
-                        return [lon, lat, ele];
-                    });
-                }
-            });
+
+
+            // // Add elevation data to the GeoJSON
+            // geoJSON.features.forEach(feature => {
+            //     if (feature.geometry.type === "LineString") {
+            //         const trkpts = gpxDoc.querySelectorAll("trkpt");
+            //         feature.geometry.coordinates = Array.from(trkpts).map((trkpt, index) => {
+            //             const lon = parseFloat(trkpt.getAttribute("lon"));
+            //             const lat = parseFloat(trkpt.getAttribute("lat"));
+            //             const ele = parseFloat(trkpt.getAttribute("ele"));
+            //             return [lon, lat, ele];
+            //         });
+            //     }
+            // });
 
             return geoJSON
         }
     </script>
+
+
+
+
 </body>
 
 </html>

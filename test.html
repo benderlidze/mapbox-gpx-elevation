@@ -35,6 +35,24 @@
         });
 
         map.on('load', () => {
+
+            //add google maps raster layer 
+            map.addSource('google-satellite', {
+                type: 'raster',
+                tiles: [
+                    'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
+                ],
+                tileSize: 256,
+            });
+
+            map.addLayer({
+                id: 'google-satellite',
+                type: 'raster',
+                source: 'google-satellite',
+                minzoom: 0,
+                maxzoom: 22
+            });
+
             map.addSource('route', {
                 'type': 'geojson',
                 'data': {

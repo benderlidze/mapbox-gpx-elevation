@@ -86,7 +86,7 @@
         const colorsArray = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'pink', 'brown', 'black', 'gray']
         const mapLegend = document.getElementById('map-legend');
 
-        const gpxFileURL = 'RinjaniApr2009.gpx';
+        const gpxFileURL = 'gpx/Gunung Rinjani via Rinjani Track.gpx';
         mapboxgl.accessToken = 'pk.eyJ1Ijoic2VyZ2JlciIsImEiOiJja3dwOWgzeGQwYWdyMm9xb2pkMDFvYmNuIn0.H9AJ_NLmDNYMed6dvu_Q0A';
         const map = new mapboxgl.Map({
             container: 'map',
@@ -206,7 +206,9 @@
                     return response.text();
                 })
                 .then(function (xml) {
-                    const geoJson = toGeoJSON.gpx(new DOMParser().parseFromString(xml, "text/xml"))
+
+
+                    const geoJson = convertGpxToGeoJSON(xml)
                     console.log('geoJson', geoJson);
 
                     geoJson.features.forEach((element, index) => {
@@ -421,6 +423,31 @@
                 result.push(average);
             }
             return result;
+        }
+
+
+        function convertGpxToGeoJSON(gpxString) {
+            // Parse the GPX string into an XML document
+            const parser = new DOMParser();
+            const gpxDoc = parser.parseFromString(gpxString, "text/xml");
+
+            // Convert to GeoJSON using togeojson
+            let geoJSON = toGeoJSON.gpx(gpxDoc);
+
+            // Add elevation data to the GeoJSON
+            geoJSON.features.forEach(feature => {
+                if (feature.geometry.type === "LineString") {
+                    const trkpts = gpxDoc.querySelectorAll("trkpt");
+                    feature.geometry.coordinates = Array.from(trkpts).map((trkpt, index) => {
+                        const lon = parseFloat(trkpt.getAttribute("lon"));
+                        const lat = parseFloat(trkpt.getAttribute("lat"));
+                        const ele = parseFloat(trkpt.getAttribute("ele"));
+                        return [lon, lat, ele];
+                    });
+                }
+            });
+
+            return geoJSON
         }
     </script>
 </body>

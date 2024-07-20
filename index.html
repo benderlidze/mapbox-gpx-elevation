@@ -95,7 +95,7 @@
 
             "2 Day - 1 Night Mt Rinjani Summit Trek": {
                 gpxFileURL: "gpx/2 Day - 1 Night Mt Rinjani Summit Trek.gpx",
-                offset: false
+                offset: true
             },
 
         }
@@ -224,6 +224,12 @@
 
 
             //add a marker 
+            new mapboxgl.Marker()
+                .setLngLat([116.495556, -8.346944])
+                .addTo(map);
+            new mapboxgl.Marker()
+                .setLngLat([116.440833, -8.392500])
+                .addTo(map);
             new mapboxgl.Marker()
                 .setLngLat([116.495556, -8.346944])
                 .addTo(map);

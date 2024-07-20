@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Add a line to a map using a GeoJSON source</title>
+    <title>Route</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.js"></script>
@@ -82,12 +82,36 @@
     </div>
 
     <script>
+
+        const url = new URL(window.location.href);
+        const trekName = url.searchParams.get("trekName") || "Senaru Crater RIm Trek"
+
+        const routes = {
+
+            "Senaru Crater RIm Trek": {
+                gpxFileURL: "gpx/Senaru Crater RIm Trek.gpx",
+                offset: true
+            },
+
+            "2 Day - 1 Night Mt Rinjani Summit Trek": {
+                gpxFileURL: "gpx/2 Day - 1 Night Mt Rinjani Summit Trek.gpx",
+                offset: false
+            },
+
+        }
+
+        const trek = routes[trekName]
+        const offset = trek.offset
+
+        console.log('route', trek);
+
+
         const mainData = {}
         const elevationChart = document.getElementById('elevation-chart');
         const colorsArray = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'pink', 'brown', 'black', 'gray']
         const mapLegend = document.getElementById('map-legend');
 
-        const gpxFileURL = 'gpx/Gunung Rinjani via Rinjani Track (2).gpx';
+        const gpxFileURL = trek.gpxFileURL
         mapboxgl.accessToken = 'pk.eyJ1Ijoic2VyZ2JlciIsImEiOiJja3dwOWgzeGQwYWdyMm9xb2pkMDFvYmNuIn0.H9AJ_NLmDNYMed6dvu_Q0A';
         const map = new mapboxgl.Map({
             container: 'map',
@@ -155,51 +179,70 @@
                 },
                 'paint': {
                     'line-color': ['get', 'color'],
-                    'line-width': 8
-                }
-            });
-
-            map.addSource('point', {
-                'type': 'geojson',
-                'data': {
-                    'type': 'FeatureCollection',
-                    'features': []
+                    'line-width': ['get', 'width']
                 }
             });
 
             map.addLayer({
                 'id': 'point',
                 'type': 'circle',
-                'source': 'point',
+                'source': 'route',
                 'paint': {
-                    'circle-radius': 10,
+                    'circle-radius': 2,
                     'circle-color': '#3887be'
                 }
             });
 
-            // Add a new source for the buffer
-            map.addSource('routeBuffer', {
-                'type': 'geojson',
-                'data': {
-                    'type': 'Feature',
-                    'properties': {},
-                    'geometry': {
-                        'type': 'Polygon',
-                        'coordinates': [[]]
-                    }
-                }
-            });
+            map.on("click", "point", function (e) {
+                console.log('e', e.lngLat);
+            })
 
-            // Add a new layer for the buffer (optional, for visualization)
-            map.addLayer({
-                'id': 'routeBuffer',
-                'type': 'fill',
-                'source': 'routeBuffer',
-                'layout': {},
-                'paint': {
-                    'fill-color': '#888',
-                    'fill-opacity': 0.1
+            // // Add a new source for the buffer
+            // map.addSource('routeBuffer', {
+            //     'type': 'geojson',
+            //     'data': {
+            //         'type': 'Feature',
+            //         'properties': {},
+            //         'geometry': {
+            //             'type': 'Polygon',
+            //             'coordinates': [[]]
+            //         }
+            //     }
+            // });
+
+            // // Add a new layer for the buffer (optional, for visualization)
+            // map.addLayer({
+            //     'id': 'routeBuffer',
+            //     'type': 'fill',
+            //     'source': 'routeBuffer',
+            //     'layout': {},
+            //     'paint': {
+            //         'fill-color': '#888',
+            //         'fill-opacity': 0.1
+            //     }
+            // });
+
+
+            //add a marker 
+            new mapboxgl.Marker()
+                .setLngLat([116.495556, -8.346944])
+                .addTo(map);
+            //add a marker 
+
+
+
+            map.on('click', function (e) {
+                var features = map.queryRenderedFeatures(e.point, {
+                    layers: ['route']
+                });
+
+                if (!features.length) {
+                    return;
                 }
+
+                var feature = features[0];
+                console.log('feature', feature);
+
             });
 
             fetch(gpxFileURL)
@@ -208,13 +251,15 @@
                 })
                 .then(function (xml) {
 
-
                     const geoJson = convertGpxToGeoJSON(xml)
-                    console.log('geoJson', geoJson);
 
                     geoJson.features.forEach((element, index) => {
                         element.properties.color = colorsArray[index % colorsArray.length]
+                        console.log('offset', offset);
+                        element.properties.width = offset ? 9 - (index * 4) : 6
                     });
+
+                    console.log('geoJson', geoJson);
 
                     addLegend(geoJson)
 
@@ -226,6 +271,7 @@
                     const coords = turf.coordAll(geoJson);
                     const start = coords[0]
                     const end = coords[coords.length - 1]
+
                     addStartEnd({ label: "A", coords: start })
                     addStartEnd({ label: "B", coords: end })
 

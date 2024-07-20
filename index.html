@@ -120,14 +120,19 @@
                 offset: true,
                 legend: false
             },
+            "Senaru Waterfalls Trek (Sendang Gile Tiu Kelep)": {
+                gpxFileURL: "gpx/Senaru Waterfalls Trek (Sendang Gile Tiu Kelep).gpx",
+                offset: true,
+                legend: false
+            },
 
         }
 
         const trek = routes[trekName]
+        console.log('route', trek);
         const offset = trek.offset
         const showLegend = trek.legend
 
-        console.log('route', trek);
 
 
         const mainData = {}

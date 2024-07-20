@@ -1557,7 +1557,9 @@
             <trkpt lat="-8.381824" lon="116.45124">
                 <ele>2161.9</ele>
             </trkpt>
-
+            <trkpt lat="-8.381911" lon="116.451118">
+                <ele>2167.0</ele>
+            </trkpt>
         </trkseg>
     </trk>
     <trk>

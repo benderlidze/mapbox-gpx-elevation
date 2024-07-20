@@ -50,6 +50,7 @@
 
         #map-legend-container {
             position: relative;
+            display: none;
         }
 
         #map-legend {
@@ -90,36 +91,48 @@
 
             "Senaru Crater RIm Trek": {
                 gpxFileURL: "gpx/Senaru Crater RIm Trek.gpx",
-                offset: true
+                offset: true,
+                legend: true
             },
 
             "2 Day - 1 Night Mt Rinjani Summit Trek": {
                 gpxFileURL: "gpx/2 Day - 1 Night Mt Rinjani Summit Trek.gpx",
-                offset: true
+                offset: true,
+                legend: true
             },
             "3 Day - 2 Night Mt Rinjani Summit Trek": {
                 gpxFileURL: "gpx/3 Day - 2 Night Mt Rinjani Summit Trek.gpx",
-                offset: false
+                offset: false,
+                legend: true
             },
             "3 Day - 2 Night Mt Rinjani Summit Trek (Torean)": {
                 gpxFileURL: "gpx/3 Day - 2 Night Mt Rinjani Summit Trek (Torean).gpx",
-                offset: false
+                offset: false,
+                legend: true
             },
             "4 Day - 2 Night Mt Rinjani Summit Trek": {
                 gpxFileURL: "gpx/4 Day - 2 Night Mt Rinjani Summit Trek.gpx",
-                offset: false
+                offset: false,
+                legend: true
+            },
+            "Pergasingan Hill Trek": {
+                gpxFileURL: "gpx/Pergasingan Hill Trek.gpx",
+                offset: true,
+                legend: false
             },
 
         }
 
         const trek = routes[trekName]
         const offset = trek.offset
+        const showLegend = trek.legend
 
         console.log('route', trek);
 
 
         const mainData = {}
         const elevationChart = document.getElementById('elevation-chart');
+        const mapLegendContainer = document.getElementById('map-legend-container');
         const colorsArray = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'pink', 'brown', 'black', 'gray']
         const mapLegend = document.getElementById('map-legend');
 
@@ -238,23 +251,8 @@
             //add a marker 
 
             new mapboxgl.Marker()
-                .setLngLat([116.495556, -8.346944])
+                .setLngLat([116.52578339671378, -8.352151638355016])
                 .addTo(map);
-            new mapboxgl.Marker()
-                .setLngLat([116.440833, -8.392500])
-                .addTo(map);
-            new mapboxgl.Marker()
-                .setLngLat([116.418333, -8.391111])
-                .addTo(map);
-            new mapboxgl.Marker()
-                .setLngLat([116.400278, -8.383611])
-                .addTo(map);
-            new mapboxgl.Marker()
-                .setLngLat([116.401111, -8.302500])
-                .addTo(map);
-
-
-
 
             map.on('click', function (e) {
                 var features = map.queryRenderedFeatures(e.point, {
@@ -286,7 +284,7 @@
 
                     console.log('geoJson', geoJson);
 
-                    addLegend(geoJson)
+                    if (showLegend) { addLegend(geoJson) }
 
                     buildElevationChart(geoJson)
                     map.getSource("route").setData(geoJson)
@@ -309,6 +307,8 @@
         });
 
         function addLegend(data) {
+
+            mapLegendContainer.style.display = "block"
             mapLegend.innerHTML = ""
 
             const items = data.features.map(d => {

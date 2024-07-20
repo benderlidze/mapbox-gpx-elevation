@@ -129,7 +129,6 @@
         }
 
         const trek = routes[trekName]
-        console.log('route', trek);
         const offset = trek.offset
         const showLegend = trek.legend
 
@@ -213,19 +212,19 @@
                 }
             });
 
-            map.addLayer({
-                'id': 'point',
-                'type': 'circle',
-                'source': 'route',
-                'paint': {
-                    'circle-radius': 2,
-                    'circle-color': '#3887be'
-                }
-            });
+            // map.addLayer({
+            //     'id': 'point',
+            //     'type': 'circle',
+            //     'source': 'route',
+            //     'paint': {
+            //         'circle-radius': 2,
+            //         'circle-color': '#3887be'
+            //     }
+            // });
 
-            map.on("click", "point", function (e) {
-                console.log('e', e.lngLat);
-            })
+            // map.on("click", "point", function (e) {
+            //     console.log('e', e.lngLat);
+            // })
 
             // // Add a new source for the buffer
             // map.addSource('routeBuffer', {
@@ -255,23 +254,23 @@
 
             //add a marker 
 
-            new mapboxgl.Marker()
-                .setLngLat([116.52578339671378, -8.352151638355016])
-                .addTo(map);
+            // new mapboxgl.Marker()
+            //     .setLngLat([116.52578339671378, -8.352151638355016])
+            //     .addTo(map);
 
-            map.on('click', function (e) {
-                var features = map.queryRenderedFeatures(e.point, {
-                    layers: ['route']
-                });
+            // map.on('click', function (e) {
+            //     var features = map.queryRenderedFeatures(e.point, {
+            //         layers: ['route']
+            //     });
 
-                if (!features.length) {
-                    return;
-                }
+            //     if (!features.length) {
+            //         return;
+            //     }
 
-                var feature = features[0];
-                console.log('feature', feature);
+            //     var feature = features[0];
+            //     console.log('feature', feature);
 
-            });
+            // });
 
             fetch(gpxFileURL)
                 .then(function (response) {
@@ -300,8 +299,8 @@
                     const start = coords[0]
                     const end = coords[coords.length - 1]
 
-                    addStartEnd({ label: "A", coords: start })
-                    addStartEnd({ label: "B", coords: end })
+                    // addStartEnd({ label: "A", coords: start })
+                    // addStartEnd({ label: "B", coords: end })
 
                     const bbox = turf.bbox(geoJson)
                     console.log('bbox', bbox);

@@ -29,7 +29,7 @@
 
         #container {
             position: relative;
-            width: 100%;
+            width: 705px;
             height: 500px;
             display: flex;
             flex-direction: row;
@@ -575,20 +575,6 @@
 
             // Convert to GeoJSON using togeojson
             const geoJSON = toGeoJSON.gpx(gpxDoc);
-
-            // // Add elevation data to the GeoJSON
-            // geoJSON.features.forEach(feature => {
-            //     if (feature.geometry.type === "LineString") {
-            //         const trkpts = gpxDoc.querySelectorAll("trkpt");
-            //         feature.geometry.coordinates = Array.from(trkpts).map((trkpt, index) => {
-            //             const lon = parseFloat(trkpt.getAttribute("lon"));
-            //             const lat = parseFloat(trkpt.getAttribute("lat"));
-            //             const ele = parseFloat(trkpt.getAttribute("ele"));
-            //             return [lon, lat, ele];
-            //         });
-            //     }
-            // });
-
             return geoJSON
         }
     </script>

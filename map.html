@@ -3,13 +3,14 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Add a line to a map using a GeoJSON source</title>
+    <title>Route</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.js"></script>
     <script src='https://unpkg.com/togeojson@0.16.0/togeojson.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7/turf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@tmcw/togeojson@5.8.1/dist/togeojson.umd.js"></script>
 
     <style>
         body {
@@ -18,8 +19,7 @@
         }
 
         #map-container {
-            width: 100%;
-            flex: 1;
+            width: 50%;
         }
 
         #map {
@@ -30,25 +30,20 @@
         #container {
             position: relative;
             width: 100%;
-            height: 100vh;
+            height: 500px;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            gap: 10px;
         }
 
         #elevation-chart {
-            height: 30%;
+            width: 50%;
             background-color: white;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-            display: flex;
-            align-items: center;
-            justify-content: center
         }
 
         #map-legend-container {
             position: relative;
+            display: none;
         }
 
         #map-legend {
@@ -81,12 +76,64 @@
     </div>
 
     <script>
+
+        const url = new URL(window.location.href);
+        const trekName = url.searchParams.get("trekName") || "Senaru Crater RIm Trek"
+
+        const routes = {
+
+            "Senaru Crater RIm Trek": {
+                gpxFileURL: "gpx/Senaru Crater RIm Trek.gpx",
+                offset: true,
+                legend: true
+            },
+
+            "2 Day - 1 Night Mt Rinjani Summit Trek": {
+                gpxFileURL: "gpx/2 Day - 1 Night Mt Rinjani Summit Trek.gpx",
+                offset: true,
+                legend: true
+            },
+            "3 Day - 2 Night Mt Rinjani Summit Trek": {
+                gpxFileURL: "gpx/3 Day - 2 Night Mt Rinjani Summit Trek.gpx",
+                offset: false,
+                legend: true
+            },
+            "3 Day - 2 Night Mt Rinjani Summit Trek (Torean)": {
+                gpxFileURL: "gpx/3 Day - 2 Night Mt Rinjani Summit Trek (Torean).gpx",
+                offset: false,
+                legend: true
+            },
+            "4 Day - 2 Night Mt Rinjani Summit Trek": {
+                gpxFileURL: "gpx/4 Day - 2 Night Mt Rinjani Summit Trek.gpx",
+                offset: false,
+                legend: true
+            },
+            "Pergasingan Hill Trek": {
+                gpxFileURL: "gpx/Pergasingan Hill Trek.gpx",
+                offset: true,
+                legend: false
+            },
+            "Senaru Waterfalls Trek (Sendang Gile Tiu Kelep)": {
+                gpxFileURL: "gpx/Senaru Waterfalls Trek (Sendang Gile Tiu Kelep).gpx",
+                offset: true,
+                legend: false
+            },
+
+        }
+
+        const trek = routes[trekName]
+        const offset = trek.offset
+        const showLegend = trek.legend
+
+
+
         const mainData = {}
         const elevationChart = document.getElementById('elevation-chart');
+        const mapLegendContainer = document.getElementById('map-legend-container');
         const colorsArray = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'pink', 'brown', 'black', 'gray']
         const mapLegend = document.getElementById('map-legend');
 
-        const gpxFileURL = 'RinjaniApr2009.gpx';
+        const gpxFileURL = trek.gpxFileURL
         mapboxgl.accessToken = 'pk.eyJ1Ijoic2VyZ2JlciIsImEiOiJja3dwOWgzeGQwYWdyMm9xb2pkMDFvYmNuIn0.H9AJ_NLmDNYMed6dvu_Q0A';
         const map = new mapboxgl.Map({
             container: 'map',
@@ -154,66 +201,87 @@
                 },
                 'paint': {
                     'line-color': ['get', 'color'],
-                    'line-width': 8
+                    'line-width': ['get', 'width']
                 }
             });
 
-            map.addSource('point', {
-                'type': 'geojson',
-                'data': {
-                    'type': 'FeatureCollection',
-                    'features': []
-                }
-            });
+            // map.addLayer({
+            //     'id': 'point',
+            //     'type': 'circle',
+            //     'source': 'route',
+            //     'paint': {
+            //         'circle-radius': 2,
+            //         'circle-color': '#3887be'
+            //     }
+            // });
 
-            map.addLayer({
-                'id': 'point',
-                'type': 'circle',
-                'source': 'point',
-                'paint': {
-                    'circle-radius': 10,
-                    'circle-color': '#3887be'
-                }
-            });
+            // map.on("click", "point", function (e) {
+            //     console.log('e', e.lngLat);
+            // })
 
-            // Add a new source for the buffer
-            map.addSource('routeBuffer', {
-                'type': 'geojson',
-                'data': {
-                    'type': 'Feature',
-                    'properties': {},
-                    'geometry': {
-                        'type': 'Polygon',
-                        'coordinates': [[]]
-                    }
-                }
-            });
+            // // Add a new source for the buffer
+            // map.addSource('routeBuffer', {
+            //     'type': 'geojson',
+            //     'data': {
+            //         'type': 'Feature',
+            //         'properties': {},
+            //         'geometry': {
+            //             'type': 'Polygon',
+            //             'coordinates': [[]]
+            //         }
+            //     }
+            // });
 
-            // Add a new layer for the buffer (optional, for visualization)
-            map.addLayer({
-                'id': 'routeBuffer',
-                'type': 'fill',
-                'source': 'routeBuffer',
-                'layout': {},
-                'paint': {
-                    'fill-color': '#888',
-                    'fill-opacity': 0.1
-                }
-            });
+            // // Add a new layer for the buffer (optional, for visualization)
+            // map.addLayer({
+            //     'id': 'routeBuffer',
+            //     'type': 'fill',
+            //     'source': 'routeBuffer',
+            //     'layout': {},
+            //     'paint': {
+            //         'fill-color': '#888',
+            //         'fill-opacity': 0.1
+            //     }
+            // });
+
+
+            //add a marker 
+
+            // new mapboxgl.Marker()
+            //     .setLngLat([116.52578339671378, -8.352151638355016])
+            //     .addTo(map);
+
+            // map.on('click', function (e) {
+            //     var features = map.queryRenderedFeatures(e.point, {
+            //         layers: ['route']
+            //     });
+
+            //     if (!features.length) {
+            //         return;
+            //     }
+
+            //     var feature = features[0];
+            //     console.log('feature', feature);
+
+            // });
 
             fetch(gpxFileURL)
                 .then(function (response) {
                     return response.text();
                 })
                 .then(function (xml) {
-                    const geoJson = toGeoJSON.gpx(new DOMParser().parseFromString(xml, "text/xml"))
-                    console.log('geoJson', geoJson);
+
+                    const geoJson = convertGpxToGeoJSON(xml)
 
                     geoJson.features.forEach((element, index) => {
                         element.properties.color = colorsArray[index % colorsArray.length]
+                        console.log('offset', offset);
+                        element.properties.width = offset ? 9 - (index * 4) : 6
                     });
 
-                    addLegend(geoJson)
+                    console.log('geoJson', geoJson);
+
+                    if (showLegend) { addLegend(geoJson) }
 
                     buildElevationChart(geoJson)
                     map.getSource("route").setData(geoJson)
@@ -223,8 +291,9 @@
                     const coords = turf.coordAll(geoJson);
                     const start = coords[0]
                     const end = coords[coords.length - 1]
-                    addStartEnd({ label: "A", coords: start })
-                    addStartEnd({ label: "B", coords: end })
+
+                    // addStartEnd({ label: "A", coords: start })
+                    // addStartEnd({ label: "B", coords: end })
 
                     const bbox = turf.bbox(geoJson)
                     console.log('bbox', bbox);
@@ -235,6 +304,8 @@
         });
 
         function addLegend(data) {
+
+            mapLegendContainer.style.display = "block"
             mapLegend.innerHTML = ""
 
             const items = data.features.map(d => {
@@ -317,8 +388,7 @@
 
             const canvas = document.createElement('canvas');
             canvas.style.width = '100%';
-            canvas.style.maxWidth = '1000px';
-            canvas.style.height = '100%';
+            canvas.style.height = 'auto';
             elevationChart.appendChild(canvas);
 
             // Moving Average smoothing
@@ -330,8 +400,32 @@
             const minElevation = Math.min(...elevation);
             const maxElevation = Math.max(...elevation);
 
+            // Create a new Image object for the logo
+            const logoImage = new Image();
+            logoImage.src = 'logo/RDA Logo Black.png'
+
+            // Define a custom plugin for drawing the background image
+            const backgroundImagePlugin = {
+                id: 'backgroundImage',
+                beforeDraw: (chart) => {
+                    if (logoImage.complete) {
+                        const ctx = chart.ctx;
+                        const { top, left, width, height } = chart.chartArea;
+                        const logoSize = Math.min(width, height) / 1.1; // Adjust size as needed
+                        const x = left + (width - logoSize) / 2;
+                        const y = top + (height - logoSize) / 2;
+                        ctx.globalAlpha = 0.1; // Adjust opacity as needed
+                        ctx.drawImage(logoImage, x, y, logoSize, logoSize);
+                        ctx.globalAlpha = 1;
+                    } else {
+                        logoImage.onload = () => chart.draw();
+                    }
+                }
+            };
+
             const chart = new Chart(canvas, {
                 type: 'line',
+                plugins: [backgroundImagePlugin],
                 data: {
                     datasets: [{
                         label: 'Elevation',
@@ -390,8 +484,6 @@
             });
         }
 
-
-
         // 1. Data Reduction
         function reduceData(data, labels, targetLength) {
             if (data.length <= targetLength) {
@@ -422,7 +514,21 @@
             }
             return result;
         }
+
+
+        function convertGpxToGeoJSON(gpxString) {
+            // Parse the GPX string into an XML document
+            const parser = new DOMParser();
+            const gpxDoc = parser.parseFromString(gpxString, "text/xml");
+            // Convert to GeoJSON using togeojson
+            const geoJSON = toGeoJSON.gpx(gpxDoc);
+            return geoJSON
+        }
     </script>
+
+
+
+
 </body>
 
 </html>

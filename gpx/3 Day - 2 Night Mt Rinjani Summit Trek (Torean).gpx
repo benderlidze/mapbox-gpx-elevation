@@ -1,12 +1,14 @@
 <?xml version="1.0"?>
-<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.1" creator="AllTrails.com" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  version="1.1" creator="AllTrails.com"
+  xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
   <metadata>
     <name><![CDATA[Trail Planner Map]]></name>
     <desc><![CDATA[]]></desc>
     <link href="http://www.alltrails.com">
       <text>AllTrails, LLC</text>
     </link>
-    <bounds minlat="-8.41139" minlon="116.41958" maxlat="-8.30994" maxlon="116.4954"/>
+    <bounds minlat="-8.41139" minlon="116.41958" maxlat="-8.30994" maxlon="116.4954" />
   </metadata>
   <trk>
     <name><![CDATA[Trail Planner Map]]></name>
@@ -4284,13 +4286,14 @@
       <trkpt lat="-8.3992" lon="116.44117">
         <ele>2979.19</ele>
       </trkpt>
+      <trkpt lat="-8.39938" lon="116.4415">
+        <ele>2983.63</ele>
+      </trkpt>
     </trkseg>
-</trk>
-<trk>
+  </trk>
+  <trk>
     <name>Day 2</name>
     <trkseg>
-
-
       <trkpt lat="-8.39938" lon="116.4415">
         <ele>2983.63</ele>
       </trkpt>
@@ -8375,12 +8378,14 @@
         <ele>1101.41</ele>
       </trkpt>
 
-  </trkseg>
-</trk>
-<trk>
+    </trkseg>
+  </trk>
+  <trk>
     <name>Day 3</name>
     <trkseg>
-
+      <trkpt lat="-8.34911" lon="116.44889">
+        <ele>1101.41</ele>
+      </trkpt>
       <trkpt lat="-8.34906" lon="116.44891">
         <ele>1101.72</ele>
       </trkpt>

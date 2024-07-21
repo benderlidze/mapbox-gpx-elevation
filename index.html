@@ -152,6 +152,7 @@
 
         map.on('load', () => {
 
+
             map.addLayer({
                 "id": "contour-labels",
                 "type": "symbol",
@@ -171,7 +172,7 @@
                     'text-color': '#877b59',
                     'text-halo-width': 1
                 },
-                'filter': ['==', ['%', ['get', 'ele'], 100], 0]
+                'filter': ['==', ['%', ['get', 'ele'], 10], 0]
             })
 
             map.addLayer({
@@ -191,7 +192,7 @@
                     'line-color': '#877b59',
                     'line-width': 1
                 },
-                'filter': ['==', ['%', ['get', 'ele'], 100], 0]
+                'filter': ['==', ['%', ['get', 'ele'], 10], 0]
             })
 
             map.addSource('route', {
@@ -380,9 +381,26 @@
                 .addTo(map);
         }
 
+
+        function extractCoordinatesWithColor(featureCollection) {
+            return featureCollection.features.map(feature => {
+                const color = feature.properties.color;
+                const coordinates = feature.geometry.coordinates;
+
+                return coordinates.map(coord => ({
+                    elev: coord[2], // elevation is the third element in each coordinate
+                    color: color
+                }));
+            }).flat();
+        }
+
+
         function buildElevationChart(geojson) {
+            console.log('geojson', geojson);
+
+            let elevation = extractCoordinatesWithColor(geojson)
+
             const coords = turf.coordAll(geojson);
-            let elevation = coords.map(d => d[2]);
 
             // Calculate cumulative distances using Turf
             let cumulativeDistance = [0];
@@ -431,19 +449,38 @@
                 }
             };
 
-            const chart = new Chart(canvas, {
+            const elevationData = elevation.map((data, index) => {
+                return { x: cumulativeDistance[index], y: data.elev, color: data.color }
+            })
+
+            chart = new Chart(canvas, {
                 type: 'line',
                 plugins: [backgroundImagePlugin],
                 data: {
                     datasets: [{
                         label: 'Elevation',
-                        data: elevation.map((elev, index) => ({ x: cumulativeDistance[index], y: elev })),
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        borderWidth: 3,
+                        data: elevationData,
+                        // borderColor: (context) => {
+                        //     if (context && context.raw && context.raw.color) {
+                        //         return context.raw.color;
+                        //     }
+                        //     return `rgba(0, 0, 0, 1)`;
+                        // },
+                        borderColor: 'rgb(75, 192, 192)',
+                        segment: {
+                            borderColor: (context) => {
+                                if (context.p0 && context.p1 && context.p0.raw && context.p1.raw) {
+                                    // Use the color of the first point of the segment
+                                    return context.p0.raw.color;
+                                }
+                                return `rgba(0, 0, 0, 0)`;
+                            }
+                        },
+                        borderWidth: 4,
                         fill: true,
                         tension: 0.4,
                         pointRadius: 0,
-                        pointHoverRadius: 5,
+                        pointHoverRadius: 0,
                     }]
                 },
                 options: {
@@ -477,17 +514,27 @@
                                     return value.toFixed(1) + 'km';
                                 }
                             }
-                        }
+                        },
                     },
+
                     plugins: {
                         tooltip: {
                             callbacks: {
                                 label: function (context) {
                                     return `Elevation: ${context.parsed.y.toFixed(0)}m, Distance: ${context.parsed.x.toFixed(2)}km`;
                                 }
-                            }
+                            },
+                            enabled: false
+                        },
+                        legend: {
+                            display: false // Hide the legend
                         }
-                    }
+                    },
+                    // animation: {
+                    //     onComplete: function () {
+                    //         console.log(chart.toBase64Image());
+                    //     },
+                    // },
                 }
             });
         }
@@ -519,8 +566,11 @@
                 const start = Math.max(0, i - windowSize + 1);
                 const end = i + 1;
                 const window = data.slice(start, end);
-                const average = window.reduce((sum, val) => sum + val, 0) / window.length;
-                result.push(average);
+                const average = window.reduce((sum, val) => sum + val.elev, 0) / window.length;
+                result.push({
+                    elev: average,
+                    color: data[i].color
+                });
             }
             return result;
         }
@@ -533,8 +583,6 @@
 
             // Convert to GeoJSON using togeojson
             const geoJSON = toGeoJSON.gpx(gpxDoc);
-
-
 
             // // Add elevation data to the GeoJSON
             // geoJSON.features.forEach(feature => {

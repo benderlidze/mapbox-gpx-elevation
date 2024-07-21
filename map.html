@@ -164,7 +164,7 @@
                     'text-color': '#877b59',
                     'text-halo-width': 1
                 },
-                'filter': ['==', ['%', ['get', 'ele'], 100], 0]
+                'filter': ['==', ['%', ['get', 'ele'], 10], 0]
             })
 
             map.addLayer({
@@ -184,7 +184,7 @@
                     'line-color': '#877b59',
                     'line-width': 1
                 },
-                'filter': ['==', ['%', ['get', 'ele'], 100], 0]
+                'filter': ['==', ['%', ['get', 'ele'], 10], 0]
             })
 
             map.addSource('route', {
@@ -391,6 +391,7 @@
             canvas.style.height = 'auto';
             elevationChart.appendChild(canvas);
 
+            
             // Moving Average smoothing
             elevation = movingAverage(elevation, 20);
 

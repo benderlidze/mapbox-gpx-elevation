@@ -1650,6 +1650,9 @@
     <trk>
         <name>Day 2</name>
         <trkseg>
+            <trkpt lat="-8.392698" lon="116.441177">
+                <ele>2659.6</ele>
+            </trkpt>
             <trkpt lat="-8.392857" lon="116.441055">
                 <ele>2668.2</ele>
             </trkpt>

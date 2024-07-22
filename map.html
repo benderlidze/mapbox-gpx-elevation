@@ -222,7 +222,6 @@
 
                     geoJson.features.forEach((element, index) => {
                         element.properties.color = colorsArray[index % colorsArray.length]
-                        console.log('offset', offset);
                         element.properties.width = offset ? 9 - (index * 4) : 6
                     });
 

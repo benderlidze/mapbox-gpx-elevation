@@ -5,14 +5,9 @@
   <metadata>
     <name><![CDATA[Trail Planner Map]]></name>
     <desc><![CDATA[]]></desc>
-    <link href="http://www.alltrails.com">
-      <text>AllTrails, LLC</text>
-    </link>
-    <bounds minlat="-8.41139" minlon="116.41958" maxlat="-8.30994" maxlon="116.4954" />
   </metadata>
   <trk>
-    <name><![CDATA[Trail Planner Map]]></name>
-    <src>AllTrails</src>
+    <name>Day 1</name>
     <trkseg>
       <trkpt lat="-8.346944" lon="116.495556">
         <ele>1060.36</ele>

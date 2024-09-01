@@ -9,16 +9,11 @@
     xmlns:gpx_style="http://www.topografix.com/GPX/gpx_style/0/2" version="1.1" creator="GaiaGPS">
     <metadata>
         <name>Gunung Rinjani via Rinjani Track (5)</name>
-        <author>
-            <name>gpx.studio</name>
-            <link href="https://gpx.studio"></link>
-        </author>
     </metadata>
     <trk>
         <name>Day 1</name>
         <type>Running</type>
         <trkseg>
-
             <trkpt lat="-8.34685" lon="116.49578">
                 <ele>1062.6</ele>
             </trkpt>
@@ -3885,7 +3880,7 @@
         </trkseg>
     </trk>
     <trk>
-        <name>Day 3</name>
+        <name>Day 3222</name>
         <trkseg>
             <trkpt lat="-8.383939" lon="116.400558">
                 <ele>2599.5</ele>

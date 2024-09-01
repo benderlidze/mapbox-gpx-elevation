@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Route</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.5.1/mapbox-gl.js"></script>
+    <script src='https://unpkg.com/togeojson@0.16.0/togeojson.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7/turf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@tmcw/togeojson@5.8.1/dist/togeojson.umd.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map-container {
+            width: 100%;
+            flex: 1;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        #container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #elevation-chart {
+            height: 30%;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        #map-legend-container {
+            position: relative;
+            display: none;
+        }
+
+        #map-legend {
+            position: absolute;
+            bottom: 30px;
+            left: 10px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="container">
+        <div id="map-container">
+            <div id="map"></div>
+            <div id="map-legend-container">
+                <div id="map-legend"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        const url = new URL(window.location.href);
+        const trekName = url.searchParams.get("trekName") || "Senaru Crater RIm Trek"
+
+        const routes = {
+
+            "Senaru Crater RIm Trek": {
+                gpxFileURL: "gpx/Senaru Crater RIm Trek.gpx",
+                offset: true,
+                legend: true
+            },
+
+            "2 Day - 1 Night Mt Rinjani Summit Trek": {
+                gpxFileURL: "gpx/2 Day - 1 Night Mt Rinjani Summit Trek.gpx",
+                offset: true,
+                legend: true
+            },
+            "3 Day - 2 Night Mt Rinjani Summit Trek": {
+                gpxFileURL: "gpx/3 Day - 2 Night Mt Rinjani Summit Trek.gpx",
+                offset: false,
+                legend: true
+            },
+            "3 Day - 2 Night Mt Rinjani Summit Trek (Torean)": {
+                gpxFileURL: "gpx/3 Day - 2 Night Mt Rinjani Summit Trek (Torean).gpx",
+                offset: false,
+                legend: true
+            },
+            "4 Day - 2 Night Mt Rinjani Summit Trek": {
+                gpxFileURL: "gpx/4 Day - 2 Night Mt Rinjani Summit Trek.gpx",
+                offset: false,
+                legend: true
+            },
+            "Pergasingan Hill Trek": {
+                gpxFileURL: "gpx/Pergasingan Hill Trek.gpx",
+                offset: true,
+                legend: false
+            },
+            "Senaru Waterfalls Trek (Sendang Gile Tiu Kelep)": {
+                gpxFileURL: "gpx/Senaru Waterfalls Trek (Sendang Gile Tiu Kelep).gpx",
+                offset: true,
+                legend: false
+            },
+
+        }
+
+        const trek = routes[trekName]
+        const offset = trek.offset
+        const showLegend = trek.legend
+
+
+
+        const mainData = {}
+        const elevationChart = document.getElementById('elevation-chart');
+        const mapLegendContainer = document.getElementById('map-legend-container');
+        const colorsArray = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'pink', 'brown', 'black', 'gray']
+        const mapLegend = document.getElementById('map-legend');
+
+        const gpxFileURL = trek.gpxFileURL
+        mapboxgl.accessToken = 'pk.eyJ1IjoicmluamFuaS1kYXduLWFkdmVudHVyZXMiLCJhIjoiY2x5d3A4cXRyMDB4eTJpcHlhcnh0bXl3NCJ9.39CUnfjwBHEjwkMYyY-EzQ';
+
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/outdoors-v12',
+            center: [-74.0060152, 40.7127281],
+            center: { lng: 116.44699281267492, lat: -8.373418469943047 },
+            zoom: 6.8
+        });
+
+
+        map.on('load', () => {
+
+
+            map.addLayer({
+                "id": "contour-labels",
+                "type": "symbol",
+                "source": {
+                    type: 'vector',
+                    url: 'mapbox://mapbox.mapbox-terrain-v2'
+                },
+                "source-layer": "contour",
+                'layout': {
+                    'visibility': 'visible',
+                    'symbol-placement': 'line',
+                    'text-field': ['concat', ['to-string', ['get', 'ele']], 'm']
+                },
+                'paint': {
+                    'icon-color': '#877b59',
+                    'icon-halo-width': 1,
+                    'text-color': '#877b59',
+                    'text-halo-width': 1
+                },
+                'filter': ['==', ['%', ['get', 'ele'], 10], 0]
+            })
+
+            map.addLayer({
+                "id": "contours",
+                "type": "line",
+                "source": {
+                    type: 'vector',
+                    url: 'mapbox://mapbox.mapbox-terrain-v2'
+                },
+                "source-layer": "contour",
+                'layout': {
+                    'visibility': 'visible',
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                'paint': {
+                    'line-color': '#877b59',
+                    'line-width': 1
+                },
+                'filter': ['==', ['%', ['get', 'ele'], 10], 0]
+            })
+
+            map.addSource('route', {
+                'type': 'geojson',
+                'data': turf.featureCollection([])
+            });
+            map.addLayer({
+                'id': 'route',
+                'type': 'line',
+                'source': 'route',
+                'layout': {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                'paint': {
+                    'line-color': ['get', 'color'],
+                    'line-width': ['get', 'width']
+                }
+            });
+
+            fetch(gpxFileURL)
+                .then(function (response) {
+                    return response.text();
+                })
+                .then(function (xml) {
+
+                    const geoJson = convertGpxToGeoJSON(xml)
+
+                    geoJson.features.forEach((element, index) => {
+                        const length = turf.length(element, { units: 'kilometers' });
+                        const maxElevation = Math.max(...element.geometry.coordinates.map(d => d[2]))
+                        const minElevation = Math.min(...element.geometry.coordinates.map(d => d[2]))
+
+
+                        element.properties.color = colorsArray[index % colorsArray.length]
+                        element.properties.width = offset ? 9 - (index * 4) : 6
+
+                        element.properties.routeLength = Math.round(length)
+                        element.properties.maxElevation = maxElevation
+                        element.properties.minElevation = minElevation
+
+                        console.log('element', element);
+
+                    });
+
+                    if (showLegend) { addLegend(geoJson) }
+
+                    map.getSource("route").setData(geoJson)
+
+                    mainData.geoJson = geoJson
+
+                    const coords = turf.coordAll(geoJson);
+                    const start = coords[0]
+                    const end = coords[coords.length - 1]
+
+                    const bbox = turf.bbox(geoJson)
+                    map.fitBounds(bbox, { padding: 50 })
+
+                });
+
+        });
+
+        function addLegend(data) {
+
+            mapLegendContainer.style.display = "block"
+            mapLegend.innerHTML = ""
+
+            const items = data.features.map(d => {
+                mapLegend.appendChild(buildItem({
+                    name: d.properties.name,
+                    color: d.properties.color,
+                    routeLength: d.properties.routeLength,
+                    maxElevation: d.properties.maxElevation,
+                    minElevation: d.properties.minElevation
+                }))
+            })
+
+            function buildItem({ name, color, routeLength, maxElevation, minElevation }) {
+
+                const container = document.createElement('div')
+                container.style.display = "flex"
+                container.style.gap = "5px"
+                container.style.flexDirection = "column"
+
+                const dayContainer = document.createElement('div')
+                dayContainer.style.display = "flex"
+                dayContainer.style.gap = "5px"
+                dayContainer.style.flexDirection = "row"
+                dayContainer.style.alignItems = "center"
+
+                const div = document.createElement('div')
+                div.style.display = "flex"
+                div.style.alignItems = "center"
+                div.innerText = name
+
+                const colorLine = document.createElement('div')
+                colorLine.style.width = "20px"
+                colorLine.style.height = "5px"
+                colorLine.style.backgroundColor = color
+
+                const containerInfo = document.createElement('div')
+                containerInfo.style.display = "flex"
+                containerInfo.style.flexDirection = "column"
+                containerInfo.style.gap = "5px"
+                containerInfo.style.borderBottom = "1px solid #ccc"
+
+                const length = document.createElement('div')
+                length.innerText = `Length: ~${routeLength} km`
+                length.style.marginLeft = "10px"
+
+                const elevation = document.createElement('div')
+                elevation.innerText = `Elevation: min ${minElevation}m -  max ${maxElevation}m`
+                elevation.style.marginLeft = "10px"
+
+                containerInfo.appendChild(length)
+                containerInfo.appendChild(elevation)
+
+                dayContainer.appendChild(colorLine)
+                dayContainer.appendChild(div)
+
+                container.appendChild(dayContainer)
+                container.appendChild(containerInfo)
+
+                return container
+            }
+        }
+
+        function addStartEnd({ label, coords }) {
+
+            // Create a DOM element for each marker.
+            const el = document.createElement('div');
+            const width = 30
+            const height = 30
+
+            const text = document.createElement('span')
+            text.innerText = label
+            text.style.color = "white"
+            text.style.fontSize = "1.5rem";
+            el.appendChild(text)
+
+            el.className = 'marker';
+            el.style.backgroundColor = "rgba(0,0,0,1)"
+            el.style.borderRadius = "5px"
+            el.style.border = "1px solid gray"
+            el.style.width = `${width}px`;
+            el.style.height = `${height}px`;
+            el.style.backgroundSize = '100%';
+            el.style.display = "flex"
+            el.style.alignItems = "center"
+            el.style.justifyContent = "center"
+
+            el.addEventListener('click', () => {
+                window.alert("123");
+            });
+
+            // Add markers to the map.
+            new mapboxgl.Marker(el)
+                .setLngLat(coords)
+                .addTo(map);
+        }
+
+
+
+
+        function convertGpxToGeoJSON(gpxString) {
+            // Parse the GPX string into an XML document
+            const parser = new DOMParser();
+            const gpxDoc = parser.parseFromString(gpxString, "text/xml");
+
+            // Convert to GeoJSON using togeojson
+            const geoJSON = toGeoJSON.gpx(gpxDoc);
+            return geoJSON
+        }
+    </script>
+
+</body>
+
+</html>

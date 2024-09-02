@@ -222,6 +222,8 @@
 
                     const geoJson = convertGpxToGeoJSON(xml)
 
+
+
                     geoJson.features.forEach((element, index) => {
                         const length = turf.length(element, { units: 'kilometers' });
                         const maxElevation = Math.max(...element.geometry.coordinates.map(d => d[2]))
@@ -235,7 +237,13 @@
                         element.properties.maxElevation = maxElevation
                         element.properties.minElevation = minElevation
 
-                        console.log('element', element);
+
+                        const elevationStats = calculateElevationStats(element);
+                        console.log('elevationStats', elevationStats);
+
+                        element.properties.elevationGain = elevationStats.elevationGain
+                        element.properties.elevationLoss = elevationStats.elevationLoss
+
 
                     });
 
@@ -262,16 +270,12 @@
             mapLegend.innerHTML = ""
 
             const items = data.features.map(d => {
-                mapLegend.appendChild(buildItem({
-                    name: d.properties.name,
-                    color: d.properties.color,
-                    routeLength: d.properties.routeLength,
-                    maxElevation: d.properties.maxElevation,
-                    minElevation: d.properties.minElevation
-                }))
+                mapLegend.appendChild(buildItem(d.properties))
             })
 
-            function buildItem({ name, color, routeLength, maxElevation, minElevation }) {
+            function buildItem(data) {
+
+                const { name, color, routeLength, maxElevation, minElevation, elevationGain, elevationLoss } = data
 
                 const container = document.createElement('div')
                 container.style.display = "flex"
@@ -305,7 +309,11 @@
                 length.style.marginLeft = "10px"
 
                 const elevation = document.createElement('div')
-                elevation.innerText = `Elevation: min ${minElevation.toFixed()}m -  max ${maxElevation.toFixed()}m`
+                elevation.innerHTML = `
+                    <div>Elevation: min ${minElevation.toFixed()}m -  max ${maxElevation.toFixed()}m</div>
+                    <div>Elevation gain: ${elevationGain}m</div>
+                    <div>Elevation loss: ${elevationLoss}m
+                `
                 elevation.style.marginLeft = "10px"
 
                 containerInfo.appendChild(length)
@@ -366,6 +374,31 @@
             // Convert to GeoJSON using togeojson
             const geoJSON = toGeoJSON.gpx(gpxDoc);
             return geoJSON
+        }
+
+        function calculateElevationStats(geoJson) {
+            console.log('geoJson', geoJson);
+
+            const elevations = geoJson.geometry.coordinates.map(coord => coord[2]);
+
+            let elevationGain = 0;
+            let elevationLoss = 0;
+
+            for (let i = 1; i < elevations.length; i++) {
+                const elevationChange = elevations[i] - elevations[i - 1];
+                if (elevationChange > 0) {
+                    elevationGain += elevationChange; // Sum positive changes for elevation gain
+                } else if (elevationChange < 0) {
+                    elevationLoss += Math.abs(elevationChange); // Sum negative changes for elevation loss
+                }
+            }
+
+            return {
+                elevationGain: elevationGain.toFixed(2),
+                elevationLoss: elevationLoss.toFixed(2)
+            };
+
+
         }
     </script>
 
